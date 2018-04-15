@@ -16,9 +16,9 @@ namespace Morabaraba
     public interface IPlayer
     {
         int numberOfCows();
-        void AddMills();
-        void RemoveMill();
-        void updatePlayed();
+        void AddMills(List<string> mill);
+        void RemoveMill(List<string> mill);
+        void updatePlayed(string position);
         string currentplayer();
         List<string> getPlayedPos();
         List<List<string>> getMills();
