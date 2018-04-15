@@ -59,9 +59,14 @@ namespace Morabaraba
             mill_List.Remove(mill);
         }
 
-        public void updatePlayed(string position)
+        public void addPlayedPositions(string position)
         {
             playedPos.Add(position);
+        }
+
+        public void removePlayedPositions(string position)
+        {
+            playedPos.Remove(position);
         }
 
         public void updateState()
