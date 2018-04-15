@@ -23,14 +23,6 @@ namespace Morabaraba.Test
             Assert.That(count == 24);
         }
         [Test]
-        public void BlackCowsStart()
-        {
-
-        }
-        [Test]
-        public void OnlyBePlacedOnEmptySpaces()
-        {
-            
-        }
+        
     }
 }
