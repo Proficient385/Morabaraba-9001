@@ -7,8 +7,10 @@ namespace Morabaraba
 
     public interface IBoard
     {
-        void updateBoard();
-        void printBoard();
+        void updateMoveToBoard(Player tempPlayer, string PositionTo);
+
+        void updateMoveFromBoard(string PositionTo);
+        void printBoard(char[,] brd);
 
         char[,] getBoard();
     }
