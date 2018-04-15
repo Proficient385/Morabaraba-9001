@@ -14,12 +14,14 @@ namespace Morabaraba.Test
         [Test]
         public void BlackCowsStart()
         {
-
+            Game game = new Game();
+            string startingPlayer = game.getCurrentPlayer();
+            Assert.That(startingPlayer == "Black");
         }
         [Test]
         public void OnlyBePlacedOnEmptySpaces()
         {
-            //lkjklj
+
         }
     }
 }
