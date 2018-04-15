@@ -43,7 +43,7 @@ namespace Morabaraba
 
         public int numberOfCows()
         {
-            throw new NotImplementedException();
+            return cowsLeft;
         }
 
         public void RemoveMill()
