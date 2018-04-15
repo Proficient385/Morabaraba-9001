@@ -8,7 +8,7 @@ namespace Morabaraba
     {
         private List<string> possibleMoves;
         private string currentPlayer;
-<<<<<<< HEAD
+
         private IPlayer player1;
         private IPlayer player2;
         private IBoard Board;
@@ -19,17 +19,7 @@ namespace Morabaraba
             player1 = new Player("Black");
             player2 = new Player("White");
             Board = new Board();
-=======
-
-        Board brd;
-        Player player;
-        public Game()
-        {
-            currentPlayer = "Black";
             possibleMoves = generatePossibleMoves();
-            brd = new Board();
-            player = new Player();
->>>>>>> 8c33c82b5028c119042ddc20abb4d55ce5d4e84f
         }
         public string getCurrentPlayer()
         {
@@ -44,13 +34,6 @@ namespace Morabaraba
             }
         }
  
-
-<<<<<<< HEAD
-        private void swapCurrentPlayer(Player tempPlayer)
-=======
-<<<<<<< HEAD
-            //return new List<char> { };
-        
         List<string> generatePossibleMoves()
         {
             return new List<string> { "A1","A4","A7",
@@ -61,9 +44,8 @@ namespace Morabaraba
                                       "F2","F4","F6",
                                       "G1","G4","G7"};
         }
-=======
+
         void swapCurrentPlayer(Player tempPlayer)
->>>>>>> 8c33c82b5028c119042ddc20abb4d55ce5d4e84f
         {
             switch (tempPlayer.currentplayer())
             {
@@ -73,8 +55,7 @@ namespace Morabaraba
                     return;
             }
         }
-
-<<<<<<< HEAD
+        
         private bool cowIn_MillPos(List<List<string>> mill_List, string pos)
         {
             for (int i = 0; i < mill_List.Count; i++)
@@ -180,9 +161,6 @@ namespace Morabaraba
         {
 
         }
-=======
->>>>>>> 30b382e9ae0e9791c036755dfa42113de4079461
->>>>>>> 8c33c82b5028c119042ddc20abb4d55ce5d4e84f
     }
     
 }
