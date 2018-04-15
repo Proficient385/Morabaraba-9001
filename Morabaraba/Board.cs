@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Morabaraba
 {
-    class Board : IBoard
+    public class Board : IBoard
     {
         private char[,] gameBoard;
 
@@ -30,6 +30,11 @@ namespace Morabaraba
         public void updateBoard()
         {
             throw new NotImplementedException();
+        }
+
+        public char[,] getBoard()
+        {
+            return gameBoard;
         }
     }
 }

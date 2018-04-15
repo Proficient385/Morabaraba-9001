@@ -9,6 +9,8 @@ namespace Morabaraba
     {
         void updateBoard();
         void printBoard();
+
+        char[,] getBoard();
     }
 
     public interface IPlayer
