@@ -20,8 +20,10 @@ namespace Morabaraba
         int numberOfCows();
         void AddMills(List<string> mill);
         void RemoveMill(List<string> mill);
-        void updatePlayed(string position);
+        void addPlayedPositions(string position);
+        void removePlayedPositions(string position);
         string currentplayer();
+        bool playerOwnPosition(string position);
         List<string> getPlayedPos();
         List<List<string>> getMills();
         string getState();
@@ -43,7 +45,7 @@ namespace Morabaraba
         bool IsDraw();
         void play();
         void Winner();
-        bool isMill();
+        bool isMill(IPlayer player);
     }
 
 

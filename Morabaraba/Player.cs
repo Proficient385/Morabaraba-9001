@@ -6,12 +6,20 @@ namespace Morabaraba
 {
     public class Player : IPlayer
     {
-        int cowsLeft = 12;
-        string state = "Placing";
-        List<string> playedPos = new List<string>();
-        List<List<string>> mill_List = new List<List<string>>();
-        string symbol = "";
+        private int cowsLeft;
+        private string state;
+        private List<string> playedPos;
+        private List<List<string>> mill_List;
+        private string symbol;
 
+        public Player(string symbol)
+        {
+            this.symbol = symbol;
+            cowsLeft = 12;
+            state = "Placing";
+            playedPos = new List<string>();
+            mill_List = new List<List<string>>();
+        }
 
 
         public void AddMills(List<string> mill)
@@ -21,8 +29,8 @@ namespace Morabaraba
 
         public string currentplayer()
         {
-            
-            throw new NotImplementedException();
+
+            return symbol;
         }
 
         public List<List<string>> getMills()
@@ -51,9 +59,14 @@ namespace Morabaraba
             mill_List.Remove(mill);
         }
 
-        public void updatePlayed(string position)
+        public void addPlayedPositions(string position)
         {
             playedPos.Add(position);
+        }
+
+        public void removePlayedPositions(string position)
+        {
+            playedPos.Remove(position);
         }
 
         public void updateState()
@@ -66,6 +79,11 @@ namespace Morabaraba
             {
                state = "Flying";
             }
+        }
+
+        public bool playerOwnPosition(string position)
+        {
+            return playedPos.Contains(position);
         }
     }
 }

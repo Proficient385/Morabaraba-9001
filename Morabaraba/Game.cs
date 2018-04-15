@@ -32,6 +32,7 @@ namespace Morabaraba
         }
  
 
+<<<<<<< HEAD
             //return new List<char> { };
         
         List<string> generatePossibleMoves()
@@ -44,6 +45,19 @@ namespace Morabaraba
                                       "F2","F4","F6",
                                       "G1","G4","G7"};
         }
+=======
+        void swapCurrentPlayer(Player tempPlayer)
+        {
+            switch (tempPlayer.currentplayer())
+            {
+                case "Black": currentPlayer = "White";
+                    return;
+                case "White": currentPlayer = "Black";
+                    return;
+            }
+        }
+
+>>>>>>> 30b382e9ae0e9791c036755dfa42113de4079461
     }
     
 }
