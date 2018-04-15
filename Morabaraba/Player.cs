@@ -6,49 +6,66 @@ namespace Morabaraba
 {
     class Player : IPlayer
     {
-        public void AddMills()
+        int cowsLeft = 12;
+        string state = "Placing";
+        List<string> playedPos = new List<string>();
+        List<List<string>> mill_List = new List<List<string>>();
+        string symbol = "";
+
+
+
+        public void AddMills(List<string> mill)
         {
-            throw new NotImplementedException();
+            mill_List.Add(mill);
         }
 
         public string currentplayer()
         {
+            
             throw new NotImplementedException();
         }
 
         public List<List<string>> getMills()
         {
-            throw new NotImplementedException();
+
+            return mill_List;
         }
 
         public List<string> getPlayedPos()
         {
-            throw new NotImplementedException();
+            return playedPos;
         }
 
         public string getState()
         {
-            throw new NotImplementedException();
+            return state;
         }
 
         public int numberOfCows()
         {
-            throw new NotImplementedException();
+            return cowsLeft;
         }
 
-        public void RemoveMill()
+        public void RemoveMill(List<string> mill)
         {
-            throw new NotImplementedException();
+            mill_List.Remove(mill);
         }
 
-        public void updatePlayed()
+        public void updatePlayed(string position)
         {
-            throw new NotImplementedException();
+            playedPos.Add(position);
         }
 
         public void updateState()
         {
-            throw new NotImplementedException();
+            if (playedPos.Count == cowsLeft)
+            {
+                state = "Moving"; 
+            }
+            if(cowsLeft == 3)
+            {
+               state = "Flying";
+            }
         }
     }
 }
