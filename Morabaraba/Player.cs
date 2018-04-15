@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Morabaraba
 {
-    class Player : IPlayer
+    public class Player : IPlayer
     {
         int cowsLeft = 12;
         string state = "Placing";

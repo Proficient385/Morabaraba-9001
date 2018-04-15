@@ -30,10 +30,10 @@ namespace Morabaraba
             Console.WriteLine("|      {0} {1} {2}   |", brd[1, 0], brd[1, 1], brd[1, 2]);
         }
 
-        public void updateMoveToBoard(Player tempPlayer, string PositionTo)
+        public void updateMoveToBoard(string player, string PositionTo)
         {
             char symbol = ' ';
-            if(tempPlayer.currentplayer() == "Black")
+            if(player == "Black")
             {
                 symbol = 'b';
             }
@@ -41,7 +41,6 @@ namespace Morabaraba
             {
                 symbol = 'w';
             }
-
             switch (PositionTo)
             {
                 case "A1": gameBoard[0, 0]=  symbol; break;

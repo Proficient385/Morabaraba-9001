@@ -8,11 +8,14 @@ namespace Morabaraba
     {
         private List<string> possibleMoves;
         private string currentPlayer;
+
+        Board brd;
         Player player;
         public Game()
         {
             currentPlayer = "Black";
             possibleMoves = generatePossibleMoves();
+            brd = new Board();
             player = new Player();
         }
         public string getCurrentPlayer()
@@ -20,10 +23,17 @@ namespace Morabaraba
             return currentPlayer;
         }
         
-        public void makeMove()
+        public void makeMove(Board gameBoard, string Position) 
         {
-            
+            if (player.getState() == "Placing")
+            {
+                gameBoard.updateMoveToBoard(currentPlayer, Position);
+            }
         }
+ 
+
+            //return new List<char> { };
+        
         List<string> generatePossibleMoves()
         {
             return new List<string> { "A1","A4","A7",
