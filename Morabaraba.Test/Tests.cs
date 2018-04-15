@@ -1,8 +1,25 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 
 namespace Morabaraba.Test
-{
-    public class Class1
+{   
+    [TestFixture]
+    public class Tests
     {
+        [Test]
+        public void CheckEmptyBoard()
+        {
+
+        }
+        [Test]
+        public void BlackCowsStart()
+        {
+
+        }
+        [Test]
+        public void OnlyBePlacedOnEmptySpaces()
+        {
+            //lkjklj
+        }
     }
 }
