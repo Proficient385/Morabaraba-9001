@@ -12,7 +12,7 @@ namespace Morabaraba.Test
         [Test]
         public void CheckEmptyBoard()
         {
-            Board board = new Board();
+            IBoard board = new Board();
             char[,] gameBoard = board.getBoard();
             int count = 0;
             for(int i=0;i<8;i++)
@@ -26,8 +26,8 @@ namespace Morabaraba.Test
         [Test]
         public void CheckMill_Is_Formed()
         {
-            Player player1 = new Player("Black");
-            Player player2 = new Player("White");
+            IPlayer player1 = new Player("Black");
+            IPlayer player2 = new Player("White");
             IReferee referee = new Referee();
 
             player1.addPlayedPositions("A1");
@@ -40,6 +40,26 @@ namespace Morabaraba.Test
 
             Assert.That(referee.isMill(player1) == true);
             Assert.That(referee.isMill(player2) == true);
+
+        }
+
+        [Test]
+        public void CheckMill_ConnectedSpaces_ContainingCows_Do_Notform_ALine()
+        {
+            Player player1 = new Player("Black");
+            Player player2 = new Player("White");
+            IReferee referee = new Referee();
+
+            player1.addPlayedPositions("D1");
+            player1.addPlayedPositions("A1");
+            player1.addPlayedPositions("A4");
+
+            player2.addPlayedPositions("A7");
+            player2.addPlayedPositions("B6");
+            player2.addPlayedPositions("D6");
+
+            Assert.That(referee.isMill(player1) == false);
+            Assert.That(referee.isMill(player2) == false);
 
         }
 
