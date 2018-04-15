@@ -4,14 +4,22 @@ using System.Text;
 
 namespace Morabaraba
 {
-    class Player : IPlayer
+    public class Player : IPlayer
     {
-        int cowsLeft = 12;
-        string state = "Placing";
-        List<string> playedPos = new List<string>();
-        List<List<string>> mill_List = new List<List<string>>();
-        string symbol = "";
+        private int cowsLeft;
+        private string state;
+        private List<string> playedPos;
+        private List<List<string>> mill_List;
+        private string symbol;
 
+        public Player(string symbol)
+        {
+            this.symbol = symbol;
+            cowsLeft = 12;
+            state = "Placing";
+            playedPos = new List<string>();
+            mill_List = new List<List<string>>();
+        }
 
 
         public void AddMills(List<string> mill)
