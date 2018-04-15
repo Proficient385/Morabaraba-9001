@@ -44,6 +44,26 @@ namespace Morabaraba.Test
         }
 
         [Test]
+        public void CheckMill_Is_Not_Formed_On_Different_Cows_On_SameLine()
+        {
+            IPlayer player1 = new Player("Black");
+            IPlayer player2 = new Player("White");
+            IReferee referee = new Referee();
+
+            player1.addPlayedPositions("A1");
+            player1.addPlayedPositions("G4");
+            player1.addPlayedPositions("A7");
+
+            player2.addPlayedPositions("A4");
+            player2.addPlayedPositions("G1");
+            player2.addPlayedPositions("G7");
+
+            Assert.That(referee.isMill(player1) == false);
+            Assert.That(referee.isMill(player2) == false); 
+
+        }
+
+        [Test]
         public void CheckMill_ConnectedSpaces_ContainingCows_Do_Notform_ALine()
         {
             Player player1 = new Player("Black");
