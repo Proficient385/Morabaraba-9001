@@ -9,12 +9,12 @@ namespace Morabaraba
         int cowsLeft = 12;
         string state = "Placing";
         List<string> playedPos = new List<string>();
-        List<string[]> mill_List = new List<string[]>();
+        List<List<string>> mill_List = new List<List<string>>();
         string symbol = "";
 
 
 
-        public void AddMills(string[] mill)
+        public void AddMills(List<string> mill)
         {
             mill_List.Add(mill);
         }
@@ -27,8 +27,8 @@ namespace Morabaraba
 
         public List<List<string>> getMills()
         {
-           
-            throw new NotImplementedException();
+
+            return mill_List;
         }
 
         public List<string> getPlayedPos()
