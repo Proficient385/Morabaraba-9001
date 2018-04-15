@@ -16,6 +16,16 @@ namespace Morabaraba
             return currentPlayer;
         }
 
+        void swapCurrentPlayer(Player tempPlayer)
+        {
+            switch (tempPlayer.currentplayer())
+            {
+                case "Black": currentPlayer = "White";
+                    return;
+                case "White": currentPlayer = "Black";
+                    return;
+            }
+        }
 
     }
     

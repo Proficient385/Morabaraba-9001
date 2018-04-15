@@ -29,8 +29,8 @@ namespace Morabaraba
 
         public string currentplayer()
         {
-            
-            throw new NotImplementedException();
+
+            return symbol;
         }
 
         public List<List<string>> getMills()
