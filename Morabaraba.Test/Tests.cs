@@ -82,6 +82,17 @@ namespace Morabaraba.Test
             Assert.That(referee.isMill(player2) == false);
 
         }
+        [Test]
+        public void BlackCowsGivenFirstChance()
+        {
+            Game game = new Game();
+            string currentPlayer = game.getCurrentPlayer();
+            Assert.AreEqual("Black", currentPlayer);
+        }
+        [Test]
+        public void CanOnlyMoveToConnectedSpace()
+        {
 
+        }
     }
 }
