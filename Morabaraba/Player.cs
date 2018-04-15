@@ -46,9 +46,9 @@ namespace Morabaraba
             return cowsLeft;
         }
 
-        public void RemoveMill()
+        public void RemoveMill(List<string> mill)
         {
-            throw new NotImplementedException();
+            mill_List.Remove(mill);
         }
 
         public void updatePlayed()
