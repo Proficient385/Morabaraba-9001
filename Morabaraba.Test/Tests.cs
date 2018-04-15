@@ -22,7 +22,26 @@ namespace Morabaraba.Test
 
             Assert.That(count == 24);
         }
+
         [Test]
-        
+        public void CheckMill_Is_Formed()
+        {
+            Player player1 = new Player("Black");
+            Player player2 = new Player("White");
+            IReferee referee = new Referee();
+
+            player1.addPlayedPositions("A1");
+            player1.addPlayedPositions("A4");
+            player1.addPlayedPositions("A7");
+
+            player2.addPlayedPositions("A7");
+            player2.addPlayedPositions("B6");
+            player2.addPlayedPositions("C5");
+
+            Assert.That(referee.isMill(player1) == true);
+            Assert.That(referee.isMill(player2) == true);
+
+        }
+
     }
 }
