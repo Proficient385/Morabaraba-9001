@@ -6,18 +6,28 @@ namespace Morabaraba
 {
     class Player : IPlayer
     {
-        public void AddMills()
+        int cowsLeft = 12;
+        string state = "Placing";
+        List<string> playedPos = new List<string>();
+        List<string[]> mill_List = new List<string[]>();
+        string symbol = "";
+
+
+
+        public void AddMills(string[] mill)
         {
-            throw new NotImplementedException();
+            mill_List.Add(mill);
         }
 
         public string currentplayer()
         {
+            
             throw new NotImplementedException();
         }
 
         public List<List<string>> getMills()
         {
+           
             throw new NotImplementedException();
         }
 
