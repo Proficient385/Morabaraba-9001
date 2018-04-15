@@ -16,7 +16,7 @@ namespace Morabaraba
         int numberOfCows();
         void AddMills(List<string> mill);
         void RemoveMill(List<string> mill);
-        void updatePlayed();
+        void updatePlayed(string position);
         string currentplayer();
         List<string> getPlayedPos();
         List<List<string>> getMills();

@@ -51,14 +51,21 @@ namespace Morabaraba
             mill_List.Remove(mill);
         }
 
-        public void updatePlayed()
+        public void updatePlayed(string position)
         {
-            throw new NotImplementedException();
+            playedPos.Add(position);
         }
 
         public void updateState()
         {
-            throw new NotImplementedException();
+            if (playedPos.Count == cowsLeft)
+            {
+                state = "Moving"; 
+            }
+            if(cowsLeft == 3)
+            {
+               state = "Flying";
+            }
         }
     }
 }
