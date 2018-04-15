@@ -80,5 +80,10 @@ namespace Morabaraba
                state = "Flying";
             }
         }
+
+        public bool playerOwnPosition(string position)
+        {
+            return playedPos.Contains(position);
+        }
     }
 }

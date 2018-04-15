@@ -21,6 +21,7 @@ namespace Morabaraba
         void addPlayedPositions(string position);
         void removePlayedPositions(string position);
         string currentplayer();
+        bool playerOwnPosition(string position);
         List<string> getPlayedPos();
         List<List<string>> getMills();
         string getState();
