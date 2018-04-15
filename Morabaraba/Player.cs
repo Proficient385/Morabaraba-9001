@@ -38,7 +38,7 @@ namespace Morabaraba
 
         public string getState()
         {
-            throw new NotImplementedException();
+            return state;
         }
 
         public int numberOfCows()
