@@ -33,7 +33,7 @@ namespace Morabaraba
 
         public List<string> getPlayedPos()
         {
-            throw new NotImplementedException();
+            return playedPos;
         }
 
         public string getState()
