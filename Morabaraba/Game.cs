@@ -12,6 +12,7 @@ namespace Morabaraba
         private int whitePlacementCount;
         private string[] lastMoveBlack;
         private string[] lastMoveWhite;
+        private int numberOf_cows_in_the_board;
 
         private IPlayer playerBlack;
         private IPlayer playerWhite;
@@ -22,36 +23,90 @@ namespace Morabaraba
             currentPlayer = "Black";
             blackPlacementCount = 0;
             whitePlacementCount = 0;
+            numberOf_cows_in_the_board = 0;
             lastMoveBlack = new string[] { "", "" };
             lastMoveWhite = new string[] { "", "" };
             playerBlack = new Player("Black");
             playerWhite = new Player("White");
             Board = new Board();
             possibleMoves = generatePossibleMoves();
+
+       
+
         }
         public string getCurrentPlayer()
         {
             return currentPlayer;
         }
-        
-        public void makePlacement(string Position) 
+
+        public int get_Number_of_cows_in_board()
         {
-            if(currentPlayer == "Black" && blackPlacementCount != 12)
+            return numberOf_cows_in_the_board;
+        }
+        public List<string> checkNeighbours(string position)
+        {
+            switch (position)
             {
-               if (playerBlack.getState() == "Placing")
+                case "A1": return new List<string> { "D1", "B2", "A4" };
+                case "A4": return new List<string> { "A1", "A7", "B4" };
+                case "A7": return new List<string> { "A4", "B6", "D7" };
+
+                case "B2": return new List<string> { "A1", "C3", "B4", "D2" };
+                case "B4": return new List<string> { "B2", "A4", "D6", "C4"};
+                case "B6": return new List<string> { "A7", "B4", "D7", "C5" };
+
+                case "C3": return new List<string> { "B2", "C4", "D3" };
+                case "C4": return new List<string> { "C3", "B4", "C5" };
+                case "C5": return new List<string> { "C4", "B6", "D5" };
+
+                case "D1": return new List<string> { "A1", "D2", "G1" };
+                case "D2": return new List<string> { "D1", "B2", "D3", "F2" };
+                case "D3": return new List<string> { "C3","D2","E3" };
+
+                case "D5": return new List<string> { "C5", "D6", "E5"};
+                case "D6": return new List<string> { "D5", "B6", "D7", "F6" };
+                case "D7": return new List<string> { "A7","D6","G7" };
+
+                case "E3": return new List<string> { "D3", "E4", "F2" };
+                case "E4": return new List<string> { "F4", "E3", "E5" };
+                case "E5": return new List<string> { "D5","E4","F6" };
+
+                case "F2": return new List<string> { "G1", "E3", "F4", "D2" };
+                case "F4": return new List<string> { "E4", "F6", "G4", "F2" };
+                case "F6": return new List<string> { "G7","D6","F4","E5" };
+
+                case "G1": return new List<string> { "G1", "E3", "F4", "D2" };
+                case "G4": return new List<string> { "E4", "F6", "G4", "F2" };
+                case "G7": return new List<string> { "G7", "D6", "F4", "E5" };
+            }
+           
+            return null;
+        }
+        public void makePlacement(string Position) 
+
+        {
+            if(currentPlayer == "Black" && blackPlacementCount < 12 && isBlankSpace(Position)== true)
+            {
+              if (playerBlack.getState() == "Placing")
                 {
                    blackPlacementCount++;
                    Board.updateMoveToBoard(currentPlayer, Position);
+                   
+                   playerBlack.addPlayedPositions(Position);
                    playerBlack.updateState();
+                   numberOf_cows_in_the_board++;
                 }
             }
-            if(currentPlayer == "White" && whitePlacementCount != 12)
+            if(currentPlayer == "White" && whitePlacementCount < 12 && isBlankSpace(Position) == true)
             {
                 if (playerWhite.getState() == "Placing")
                 {
                    whitePlacementCount++;
                    Board.updateMoveToBoard(currentPlayer, Position);
+                   
+                   playerWhite.addPlayedPositions(Position);
                    playerWhite.updateState();
+                   numberOf_cows_in_the_board++;
                 }
             }
 
@@ -59,18 +114,26 @@ namespace Morabaraba
 
         public void makeMove(string moveFrom, string moveTo)
         {
-            if(currentPlayer == "Black" && playerBlack.getState()=="Moving")
+            if(currentPlayer == "Black" && playerBlack.getState()=="Moving" && isBlankSpace(moveTo))
             {
                 Board.updateMoveFromBoard(moveFrom);
                 Board.updateMoveToBoard(currentPlayer,moveTo);
+
+                playerBlack.addPlayedPositions(moveTo);
+                playerBlack.removePlayedPositions(moveFrom);
+
                 lastMoveBlack[0] = moveFrom;
                 lastMoveBlack[1] = moveTo;
             }
 
-            if (currentPlayer == "White" && playerWhite.getState() == "Moving")
+            if (currentPlayer == "White" && playerWhite.getState() == "Moving" && isBlankSpace(moveTo))
             {
                 Board.updateMoveFromBoard(moveFrom);
                 Board.updateMoveToBoard(currentPlayer, moveTo);
+
+                playerWhite.addPlayedPositions(moveTo);
+                playerWhite.removePlayedPositions(moveFrom);
+
                 lastMoveWhite[0] = moveFrom;
                 lastMoveWhite[1] = moveTo;
             }
@@ -88,16 +151,22 @@ namespace Morabaraba
 
         public string[] getLastMove()
         {
-            if(currentPlayer == "Black")
+            if (currentPlayer == "Black")
             {
-               return lastMoveBlack;
+                return lastMoveBlack;
             }
             else
             {
                 return lastMoveWhite;
+
             }
-            
         }
+
+        public bool isBlankSpace(string pos)
+        {
+            return getPieceAtPos(pos) == ' ';
+        }
+
         List<string> generatePossibleMoves()
         {
             return new List<string> { "A1","A4","A7",
@@ -109,9 +178,9 @@ namespace Morabaraba
                                       "G1","G4","G7"};
         }
 
-        void swapCurrentPlayer(Player tempPlayer)
+        public void swapCurrentPlayer()
         {
-            switch (tempPlayer.currentplayer())
+            switch (currentPlayer)
             {
                 case "Black": currentPlayer = "White";
                     return;
@@ -128,6 +197,7 @@ namespace Morabaraba
             }
             return false;
         }
+
 
         private int numberOf_Cow_NotInMill(IPlayer player)
         {
@@ -152,7 +222,7 @@ namespace Morabaraba
             return count;
         }
 
-        private char getPieceAtPos(string position)
+        public char getPieceAtPos(string position)
         {
             char[,] gameBoard = Board.getBoard();
             switch(position)
@@ -225,6 +295,11 @@ namespace Morabaraba
         {
 
         }
+
+        public void runGame()
+        {
+            
+        }
     }
-    
+   
 }

@@ -22,6 +22,7 @@ namespace Morabaraba
         void RemoveMill(List<string> mill);
         void addPlayedPositions(string position);
         void removePlayedPositions(string position);
+        void killCow(string position);
         string currentplayer();
         bool playerOwnPosition(string position);
         List<string> getPlayedPos();

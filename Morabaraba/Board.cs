@@ -114,6 +114,44 @@ namespace Morabaraba
                 case "G7": gameBoard[7, 2] = ' '; break;
             }
         }
+        public int[] fromPositionToIndex(string position)
+        {
+            switch (position)
+            {
+                case "A1": return new int[] { 0, 0 };
+                case "A4": return new int[] { 0, 1 };
+                case "A7": return new int[] { 0, 2 };
+
+                case "B2": return new int[] { 1, 0 };
+                case "B4": return new int[] { 1, 1 };
+                case "B6": return new int[] { 1, 2 };
+
+                case "C3": return new int[] { 2, 0 };
+                case "C4": return new int[] { 2, 1 };
+                case "C5": return new int[] { 2, 2 };
+
+                case "D1": return new int[] { 3, 0 };
+                case "D2": return new int[] { 3, 1 };
+                case "D3": return new int[] { 3, 2 };
+
+                case "D5": return new int[] { 4, 0 };
+                case "D6": return new int[] { 4, 1 };
+                case "D7": return new int[] { 4, 2 };
+
+                case "E3": return new int[] { 5, 0 };
+                case "E4": return new int[] { 5, 1 };
+                case "E5": return new int[] { 5, 2 };
+
+                case "F2": return new int[] { 6, 0 };
+                case "F4": return new int[] { 6, 1 };
+                case "F6": return new int[] { 6, 2 };
+
+                case "G1": return new int[] { 7, 0 };
+                case "G4": return new int[] { 7, 1 };
+                case "G7": return new int[] { 7, 2 };
+            }
+            return null;
+        }
         public char[,] getBoard()
         {
             return gameBoard;

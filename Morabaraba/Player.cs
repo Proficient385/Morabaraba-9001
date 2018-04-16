@@ -29,7 +29,6 @@ namespace Morabaraba
 
         public string currentplayer()
         {
-
             return symbol;
         }
 
@@ -64,6 +63,7 @@ namespace Morabaraba
             playedPos.Add(position);
         }
 
+
         public void removePlayedPositions(string position)
         {
             playedPos.Remove(position);
@@ -73,7 +73,7 @@ namespace Morabaraba
         {
             if (playedPos.Count == cowsLeft)
             {
-                state = "Moving"; 
+               state = "Moving"; 
             }
             if(cowsLeft == 3)
             {
@@ -84,6 +84,12 @@ namespace Morabaraba
         public bool playerOwnPosition(string position)
         {
             return playedPos.Contains(position);
+        }
+
+        public void killCow(string position)
+        {
+            removePlayedPositions(position);
+            cowsLeft--;
         }
     }
 }
