@@ -29,7 +29,6 @@ namespace Morabaraba
 
         public string currentplayer()
         {
-
             return symbol;
         }
 
@@ -84,6 +83,12 @@ namespace Morabaraba
         public bool playerOwnPosition(string position)
         {
             return playedPos.Contains(position);
+        }
+
+        public void killCow(string position)
+        {
+            removePlayedPositions(position);
+            cowsLeft--;
         }
     }
 }
