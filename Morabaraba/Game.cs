@@ -14,8 +14,12 @@ namespace Morabaraba
         private string[] lastMoveWhite;
         private int numberOf_cows_in_the_board;
 
+
         private IPlayer playerBlack;
         private IPlayer playerWhite;
+
+        private IPlayer Black;
+        private IPlayer White;
         private IBoard Board;
 
         public Game()
@@ -30,19 +34,27 @@ namespace Morabaraba
             playerWhite = new Player("White");
             Board = new Board();
             possibleMoves = generatePossibleMoves();
-
-       
-
+            Black = new Player("Black");
+            White = new Player("White");
+            Board = new Board();
+            possibleMoves = generatePossibleMoves();
+            
         }
-        public string getCurrentPlayer()
+
+
+        public string getcurrentPlayer()
         {
             return currentPlayer;
         }
+
+
 
         public int get_Number_of_cows_in_board()
         {
             return numberOf_cows_in_the_board;
         }
+
+
         public List<string> checkNeighbours(string position)
         {
             switch (position)
@@ -52,7 +64,7 @@ namespace Morabaraba
                 case "A7": return new List<string> { "A4", "B6", "D7" };
 
                 case "B2": return new List<string> { "A1", "C3", "B4", "D2" };
-                case "B4": return new List<string> { "B2", "A4", "D6", "C4"};
+                case "B4": return new List<string> { "B2", "A4", "D6", "C4" };
                 case "B6": return new List<string> { "A7", "B4", "D7", "C5" };
 
                 case "C3": return new List<string> { "B2", "C4", "D3" };
@@ -61,27 +73,30 @@ namespace Morabaraba
 
                 case "D1": return new List<string> { "A1", "D2", "G1" };
                 case "D2": return new List<string> { "D1", "B2", "D3", "F2" };
-                case "D3": return new List<string> { "C3","D2","E3" };
+                case "D3": return new List<string> { "C3", "D2", "E3" };
 
-                case "D5": return new List<string> { "C5", "D6", "E5"};
+                case "D5": return new List<string> { "C5", "D6", "E5" };
                 case "D6": return new List<string> { "D5", "B6", "D7", "F6" };
-                case "D7": return new List<string> { "A7","D6","G7" };
+                case "D7": return new List<string> { "A7", "D6", "G7" };
 
                 case "E3": return new List<string> { "D3", "E4", "F2" };
                 case "E4": return new List<string> { "F4", "E3", "E5" };
-                case "E5": return new List<string> { "D5","E4","F6" };
+                case "E5": return new List<string> { "D5", "E4", "F6" };
 
                 case "F2": return new List<string> { "G1", "E3", "F4", "D2" };
                 case "F4": return new List<string> { "E4", "F6", "G4", "F2" };
-                case "F6": return new List<string> { "G7","D6","F4","E5" };
+                case "F6": return new List<string> { "G7", "D6", "F4", "E5" };
 
                 case "G1": return new List<string> { "G1", "E3", "F4", "D2" };
                 case "G4": return new List<string> { "E4", "F6", "G4", "F2" };
                 case "G7": return new List<string> { "G7", "D6", "F4", "E5" };
             }
-           
+
             return null;
         }
+
+
+
         public void makePlacement(string Position) 
 
         {
@@ -110,11 +125,15 @@ namespace Morabaraba
                 }
             }
 
+
         }
+
 
         public void makeMove(string moveFrom, string moveTo)
         {
-            if(currentPlayer == "Black" && playerBlack.getState()=="Moving" && isBlankSpace(moveTo))
+
+            //   if (player.getState() == "Moving" || checkNeighbours(fromPos).Contains(toPos))
+            if (currentPlayer == "Black" && playerBlack.getState()=="Moving" && isBlankSpace(moveTo))
             {
                 Board.updateMoveFromBoard(moveFrom);
                 Board.updateMoveToBoard(currentPlayer,moveTo);
@@ -139,15 +158,21 @@ namespace Morabaraba
             }
         }
 
+
+
         public int getNUmOfPlacedBlackCows()
         {
             return blackPlacementCount;
         }
 
+
+
         public int getNUmOfPlacedWhiteCows()
         {
             return whitePlacementCount;
         }
+
+
 
         public string[] getLastMove()
         {
@@ -162,10 +187,14 @@ namespace Morabaraba
             }
         }
 
+
+
         public bool isBlankSpace(string pos)
         {
             return getPieceAtPos(pos) == ' ';
         }
+
+
 
         List<string> generatePossibleMoves()
         {
@@ -178,9 +207,19 @@ namespace Morabaraba
                                       "G1","G4","G7"};
         }
 
-        public void swapCurrentPlayer()
+
+
+        private bool isValidPosition(string position)
+        {
+            return possibleMoves.Contains(position);
+        }
+
+
+
+        public void swapcurrentPlayer()
         {
             switch (currentPlayer)
+
             {
                 case "Black": currentPlayer = "White";
                     return;
@@ -188,7 +227,9 @@ namespace Morabaraba
                     return;
             }
         }
-        
+
+
+
         private bool cowIn_MillPos(List<List<string>> mill_List, string pos)
         {
             for (int i = 0; i < mill_List.Count; i++)
@@ -199,18 +240,18 @@ namespace Morabaraba
         }
 
 
+
         private int numberOf_Cow_NotInMill(IPlayer player)
         {
             int count = 0;
             List<string> playedPos = player.getPlayedPos();
             List<List<string>> mill_list = player.getMills();
             bool cowINmill = false;
-            for (int i=0;i<playedPos.Count;i++)
+            for (int i = 0; i < playedPos.Count; i++)
             {
-               
-                foreach(List<string> mill in mill_list)
+                foreach (List<string> mill in mill_list)
                 {
-                    if(mill.Contains(playedPos[i]))
+                    if (mill.Contains(playedPos[i]))
                     {
                         cowINmill = true;
                         break;
@@ -222,10 +263,11 @@ namespace Morabaraba
             return count;
         }
 
+
         public char getPieceAtPos(string position)
         {
             char[,] gameBoard = Board.getBoard();
-            switch(position)
+            switch (position)
             {
                 case "A1": return gameBoard[0, 0];
                 case "A4": return gameBoard[0, 1];
@@ -255,51 +297,95 @@ namespace Morabaraba
             return ' ';
         }
 
-        private bool invalidKill(string position)
+
+
+        private bool invalidKill(IPlayer player, IBoard board, string position)
         {
+            if (!isValidPosition(position))
+            {
+                // Console.WriteLine("Out of range!");
+                // CLI -> print appropriate message
+                return true;
+            }
+
             char piece = getPieceAtPos(position);
+            //Console.WriteLine(piece);
             if (piece == ' ')
             {
+                //Console.WriteLine("Blank ");
                 // CLI -> print appropriate message
                 return true;
             }
             else
             {
-                if (currentPlayer == "Black")
+                if (player.currentPlayer() == "Black")
                 {
+
                     if (cowIn_MillPos(playerWhite.getMills(), position) && numberOf_Cow_NotInMill(playerWhite) == 0)
+
+                    if (!player.playerOwnPosition(position)) return true;
+                    if (cowIn_MillPos(player.getMills(), position) && numberOf_Cow_NotInMill(player) == 0)
+
                     {
-                        //messageDisplay("Cannot kill a cow already\n in a mill, try\n another cow");
+                        return false;
+                    }
+                    else if (cowIn_MillPos(player.getMills(), position))
+                    {
+                        Console.WriteLine("Cannot kill a cow already\n in a mill, try\n another cow");
                         return true;
                     }
                     return false;
-
                 }
-                else if (currentPlayer == "White")
+                else if (player.currentPlayer() == "White")
                 {
+
                     if (cowIn_MillPos(playerBlack.getMills(), position) && numberOf_Cow_NotInMill(playerBlack) == 0)
+
+                    if (cowIn_MillPos(player.getMills(), position) && numberOf_Cow_NotInMill(player) == 0)
                     {
-                        //messageDisplay("Cannot kill a cow already\n in a mill, try\n another cow");
+                        // Console.WriteLine("Cannot kill a cow already\n in a mill, try\n another cow");
+                        return false;
+                    }
+                    else if (cowIn_MillPos(player.getMills(), position))
+
+                    {
+                        Console.WriteLine("Cannot kill a cow already\n in a mill, try\n another cow");
                         return true;
                     }
+
                     return false;
                 }
                 else
                 {
-                    //messageDisplay("Don't kill yourself, Try again");
+                    //Console.WriteLine("Don't kill yourself, Try again");
                     return true;
                 }
             }
         }
-        private void eliminate(string Position)
-        {
 
+
+        public void eliminate(IPlayer player, IBoard board, string position)
+        {
+            if (invalidKill(player, board, position))
+            {
+                //Console.WriteLine("Error!");
+                return;
+            }
+            else
+            {
+                player.killCow(position);
+                board.updateMoveFromBoard(position);
+                Console.WriteLine("KILLLLLLEDDDD!");
+            }
         }
+
 
         public void runGame()
         {
-            
+
         }
+
+
+
     }
-   
 }

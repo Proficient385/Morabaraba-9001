@@ -82,13 +82,15 @@ namespace Morabaraba.Test
             Assert.That(referee.isMill(player2) == false);
 
         }
+
         [Test]
         public void BlackCowsGivenFirstChance()
         {
             Game game = new Game();
-            string currentPlayer = game.getCurrentPlayer();
+            string currentPlayer = game.getcurrentPlayer();
             Assert.AreEqual("Black", currentPlayer);
         }
+
         [Test]
         public void CanOnlyMoveToConnectedSpace()
         {
@@ -101,7 +103,6 @@ namespace Morabaraba.Test
             Assert.AreEqual(true, game.checkNeighbours("F6").Contains("F4"));
             Assert.AreEqual(false, game.checkNeighbours("D1").Contains("F4"));
         }
-
 
         [Test]
 
@@ -160,15 +161,161 @@ namespace Morabaraba.Test
             Game myGame = new Game();
 
             myGame.makePlacement("A1");
-            myGame.swapCurrentPlayer();
+            myGame.swapcurrentPlayer();
             myGame.makePlacement("A1");
             myGame.makePlacement("A4");
 
             Assert.That(myGame.getPieceAtPos("A1") == 'b');
             Assert.That(myGame.getPieceAtPos("A4") == 'w');
-
         }
-       
+
+        [Test]
+        public void CanOnlyMoveToAnEmptySpace()
+        {
+            Game game = new Game();
+            IPlayer player = new Player("Black");
+            Board board = new Board();
+        }
+
+        [Test]
+        public void Cow_in_a_mill_when_nonMill_cows_exist_cannot_be_shot()
+        {
+            IPlayer player1 = new Player("Black");
+            IPlayer player2 = new Player("White");
+            Game game = new Game();
+            IBoard board = new Board();
+
+            player1.addPlayedPositions("A1");
+            player1.addPlayedPositions("A4");
+            player1.addPlayedPositions("A7");
+            player1.AddMills(new List<string> { "A1", "A4", "A7" });
+            player1.addPlayedPositions("B2");
+
+            board.updateMoveToBoard("Black", "A1");
+            board.updateMoveToBoard("Black", "A4");
+            board.updateMoveToBoard("Black", "A7");
+            board.updateMoveToBoard("Black", "B2");
+
+            player2.addPlayedPositions("D7");
+            player2.addPlayedPositions("D6");
+            player2.addPlayedPositions("D5");
+            player2.AddMills(new List<string> { "D7", "D6", "D5" });
+            player2.addPlayedPositions("E5");
+
+            board.updateMoveToBoard("White", "D7");
+            board.updateMoveToBoard("White", "D6");
+            board.updateMoveToBoard("White", "D5");
+            board.updateMoveToBoard("White", "E5");
+
+            game.eliminate(player1,board, "A1");
+            game.eliminate(player2,board, "D5");
+
+            Assert.That(player1.getPlayedPos().Contains("A1")==true);
+            Assert.That(player2.getPlayedPos().Contains("D5") == true);
+        }
+
+        [Test]
+        public void A_cow_in_a_mill_when_all_cows_are_in_mills_can_be_shot()
+        {
+            IPlayer player1 = new Player("Black");
+            IPlayer player2 = new Player("White");
+            Game game = new Game();
+            IBoard board = new Board();
+
+            player1.addPlayedPositions("A1");
+            player1.addPlayedPositions("A4");
+            player1.addPlayedPositions("A7");
+            player1.AddMills(new List<string> { "A1", "A4", "A7" });
+            
+            board.updateMoveToBoard("Black", "A1");
+            board.updateMoveToBoard("Black", "A4");
+            board.updateMoveToBoard("Black", "A7");
+            
+            player2.addPlayedPositions("D7");
+            player2.addPlayedPositions("D6");
+            player2.addPlayedPositions("D5");
+            player2.AddMills(new List<string> { "D7", "D6", "D5" });
+            
+            board.updateMoveToBoard("White", "D7");
+            board.updateMoveToBoard("White", "D6");
+            board.updateMoveToBoard("White", "D5");
+            
+            game.eliminate(player1, board, "A1");
+            game.eliminate(player2, board, "D5");
+
+            Assert.That(player1.getPlayedPos().Contains("A1") == false);
+            Assert.That(player2.getPlayedPos().Contains("D5") == false);
+        }
+
+        [Test]
+        public void A_player_cannot_shoot_their_own_cows()
+        {
+            IPlayer player1 = new Player("Black");
+            IPlayer player2 = new Player("White");
+            Game game = new Game();
+            IBoard board = new Board();
+
+            player1.addPlayedPositions("A1");
+            player1.addPlayedPositions("A4");
+            player1.addPlayedPositions("A7");
+            player1.AddMills(new List<string> { "A1", "A4", "A7" });
+
+            board.updateMoveToBoard("Black", "A1");
+            board.updateMoveToBoard("Black", "A4");
+            board.updateMoveToBoard("Black", "A7");
+
+            player2.addPlayedPositions("D7");
+            player2.addPlayedPositions("D6");
+            player2.addPlayedPositions("D5");
+            player2.AddMills(new List<string> { "D7", "D6", "D5" });
+
+            board.updateMoveToBoard("White", "D7");
+            board.updateMoveToBoard("White", "D6");
+            board.updateMoveToBoard("White", "D5");
+
+            game.eliminate(player1, board, "D5");
+            game.eliminate(player2, board, "A1");
+
+            Assert.That(player1.getPlayedPos().Contains("A1") == true);
+            Assert.That(player2.getPlayedPos().Contains("D5") == true);
+        }
+
+        [Test]
+        public void Shot_cows_are_removed_from_the_board()
+        {
+            IPlayer player1 = new Player("Black");
+            IPlayer player2 = new Player("White");
+            Game game = new Game();
+            IBoard board = new Board();
+
+            player1.addPlayedPositions("A1");
+            player1.addPlayedPositions("A4");
+            player1.addPlayedPositions("A7");
+            player1.AddMills(new List<string> { "A1", "A4", "A7" });
+
+            board.updateMoveToBoard("Black", "A1");
+            board.updateMoveToBoard("Black", "A4");
+            board.updateMoveToBoard("Black", "A7");
+
+            player2.addPlayedPositions("D7");
+            player2.addPlayedPositions("D6");
+            player2.addPlayedPositions("D5");
+            
+            board.updateMoveToBoard("White", "D7");
+            board.updateMoveToBoard("White", "D6");
+            board.updateMoveToBoard("White", "D5");
+            player2.AddMills(new List<string> { "D7", "D6", "D5" });
+
+            Assert.That(game.getPieceAtPos("A1") == 'b');
+            Assert.That(game.getPieceAtPos("D5") == 'w');
+
+            game.eliminate(player1, board, "A1");
+            game.eliminate(player2, board, "D5");
+
+            Assert.That(game.getPieceAtPos("A1")==' ');
+            Assert.That(game.getPieceAtPos("D5")== ' ');
+        }
+        
         
         [Test]
         public void Can_Only_Move_To_An_EmptySpace()
@@ -193,10 +340,10 @@ namespace Morabaraba.Test
             myGame.makePlacement("D3");
 
             myGame.makeMove("D1", "G1");
-            myGame.swapCurrentPlayer();
+            myGame.swapcurrentPlayer();
 
             myGame.makePlacement("G4");
-            myGame.swapCurrentPlayer();
+            myGame.swapcurrentPlayer();
 
             myGame.makeMove("G1", "G4");
 
@@ -237,5 +384,6 @@ namespace Morabaraba.Test
 
 
     }    
+
 }
 
