@@ -9,32 +9,29 @@ namespace Morabaraba
         private List<string> possibleMoves;
         private string currentPlayer;
 
-        private IPlayer player1;
-        private IPlayer player2;
+        private IPlayer Black;
+        private IPlayer White;
         private IBoard Board;
 
         public Game()
         {
             currentPlayer = "Black";
-            player1 = new Player("Black");
-            player2 = new Player("White");
+            Black = new Player("Black");
+            White = new Player("White");
             Board = new Board();
             possibleMoves = generatePossibleMoves();
         }
-        public string getCurrentPlayer()
+        public string getcurrentPlayer()
         {
             return currentPlayer;
         }
         
         public void makeMove(Board gameBoard, string Position) 
         {
-            if (player.getState() == "Placing")
-            {
-                gameBoard.updateMoveToBoard(currentPlayer, Position);
-            }
+            
         }
  
-        List<string> generatePossibleMoves()
+        private List<string> generatePossibleMoves()
         {
             return new List<string> { "A1","A4","A7",
                                       "B2","B4","B6",
@@ -45,9 +42,14 @@ namespace Morabaraba
                                       "G1","G4","G7"};
         }
 
-        void swapCurrentPlayer(Player tempPlayer)
+        private bool isValidPosition(string position)
         {
-            switch (tempPlayer.currentplayer())
+            return possibleMoves.Contains(position);
+        }
+
+        private void swapcurrentPlayer(Player tempPlayer)
+        {
+            switch (tempPlayer.currentPlayer())
             {
                 case "Black": currentPlayer = "White";
                     return;
@@ -73,7 +75,6 @@ namespace Morabaraba
             bool cowINmill = false;
             for (int i=0;i<playedPos.Count;i++)
             {
-               
                 foreach(List<string> mill in mill_list)
                 {
                     if(mill.Contains(playedPos[i]))
@@ -88,7 +89,7 @@ namespace Morabaraba
             return count;
         }
 
-        private char getPieceAtPos(string position)
+        public char getPieceAtPos(string position, IBoard Board)
         {
             char[,] gameBoard = Board.getBoard();
             switch(position)
@@ -121,46 +122,75 @@ namespace Morabaraba
             return ' ';
         }
 
-        private bool invalidKill(string position)
+        private bool invalidKill(IPlayer player, IBoard board, string position)
         {
-            char piece = getPieceAtPos(position);
+            if(!isValidPosition(position))
+            {
+               // Console.WriteLine("Out of range!");
+                // CLI -> print appropriate message
+                return true;
+            }
+
+            char piece = getPieceAtPos(position, board);
+            //Console.WriteLine(piece);
             if (piece == ' ')
             {
+                //Console.WriteLine("Blank ");
                 // CLI -> print appropriate message
                 return true;
             }
             else
             {
-                if (currentPlayer == "Black")
+                if (player.currentPlayer() == "Black")
                 {
-                    if (cowIn_MillPos(player2.getMills(), position) && numberOf_Cow_NotInMill(player2) == 0)
+                    if (cowIn_MillPos(player.getMills(), position) && numberOf_Cow_NotInMill(player) == 0)
                     {
-                        //messageDisplay("Cannot kill a cow already\n in a mill, try\n another cow");
+                        return false;
+                    }
+                    else if (cowIn_MillPos(player.getMills(), position))
+                    {
+                        Console.WriteLine("Cannot kill a cow already\n in a mill, try\n another cow");
                         return true;
                     }
                     return false;
-
                 }
-                else if (currentPlayer == "White")
+                else if (player.currentPlayer() == "White")
                 {
-                    if (cowIn_MillPos(player1.getMills(), position) && numberOf_Cow_NotInMill(player1) == 0)
+                    if (cowIn_MillPos(player.getMills(), position) && numberOf_Cow_NotInMill(player) == 0)
                     {
-                        //messageDisplay("Cannot kill a cow already\n in a mill, try\n another cow");
+                        // Console.WriteLine("Cannot kill a cow already\n in a mill, try\n another cow");
+                        return false;
+                    }
+                    else if (cowIn_MillPos(player.getMills(), position))
+                    {
+                        Console.WriteLine("Cannot kill a cow already\n in a mill, try\n another cow");
                         return true;
                     }
+
                     return false;
                 }
                 else
                 {
-                    //messageDisplay("Don't kill yourself, Try again");
+                    //Console.WriteLine("Don't kill yourself, Try again");
                     return true;
                 }
             }
         }
-        private void eliminate(string Position)
+        public void eliminate(IPlayer player, IBoard board, string position)
         {
-
+            if(invalidKill(player,board,position))
+            {
+                //Console.WriteLine("Error!");
+                return;
+            }
+            else
+            {
+                player.killCow(position);
+                Board.updateMoveFromBoard(position);
+                Console.WriteLine("KILLLLLLEDDDD!");
+            }
         }
+
     }
     
 }

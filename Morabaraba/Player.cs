@@ -27,7 +27,7 @@ namespace Morabaraba
             mill_List.Add(mill);
         }
 
-        public string currentplayer()
+        public string currentPlayer()
         {
             return symbol;
         }

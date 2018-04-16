@@ -34,7 +34,8 @@ namespace Morabaraba
         {
             switch (position)
             {
-                case "A1": gameBoard[0, 0] = symbol; break;
+                case "A1": gameBoard[0, 0] = symbol;
+                    break;
                 case "A4": gameBoard[0, 1] = symbol; break;
                 case "A7": gameBoard[0, 2] = symbol; break;
 
