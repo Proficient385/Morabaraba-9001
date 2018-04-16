@@ -187,7 +187,7 @@ namespace Morabaraba
             else
             {
                 player.killCow(position);
-                Board.updateMoveFromBoard(position);
+                board.updateMoveFromBoard(position);
                 Console.WriteLine("KILLLLLLEDDDD!");
             }
         }
