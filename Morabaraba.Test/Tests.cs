@@ -99,8 +99,23 @@ namespace Morabaraba.Test
             player.getState();
             game.makeMove(board, player, "A1", "A4");
             game.makeMove(board, player, "F6", "F4");
+            game.makeMove(board, player, "D1", "F4");
             Assert.AreEqual(true, game.checkNeighbours("A1").Contains("A4"));
             Assert.AreEqual(true, game.checkNeighbours("F6").Contains("F4"));
+            Assert.AreEqual(false, game.checkNeighbours("D1").Contains("F4"));
+        }
+        public void CanOnlyMoveToAnEmptySpace()
+        {
+            Game game = new Game();
+            IPlayer player = new Player("Black");
+            Board board = new Board();
+
+            player.getState();
+            game.makeMove(board, player, "A1", "A4");
+            game.makeMove(board, player, "F6", "F4");
+            game.makeMove(board, player, "D1", "F4");
+
+            
         }
     }
 }

@@ -29,6 +29,13 @@ namespace Morabaraba
         {
             return currentPlayer;
         }
+
+        public bool isEmpty(Board brd, string position)
+        {
+            int[] p = brd.fromPositionToIndex(position);
+            if (brd.getBoard()[p[0], p[1]] == ' ') return true;
+            return false;
+        }
         public List<string> checkNeighbours(string position)
         {
             switch (position)
