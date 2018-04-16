@@ -153,6 +153,37 @@ namespace Morabaraba.Test
             Assert.That(player2.getPlayedPos().Contains("D5") == false);
         }
 
+        [Test]
+        public void A_player_cannot_shoot_their_own_cows()
+        {
+            IPlayer player1 = new Player("Black");
+            IPlayer player2 = new Player("White");
+            Game game = new Game();
+            IBoard board = new Board();
 
+            player1.addPlayedPositions("A1");
+            player1.addPlayedPositions("A4");
+            player1.addPlayedPositions("A7");
+            player1.AddMills(new List<string> { "A1", "A4", "A7" });
+
+            board.updateMoveToBoard("Black", "A1");
+            board.updateMoveToBoard("Black", "A4");
+            board.updateMoveToBoard("Black", "A7");
+
+            player2.addPlayedPositions("D7");
+            player2.addPlayedPositions("D6");
+            player2.addPlayedPositions("D5");
+            player2.AddMills(new List<string> { "D7", "D6", "D5" });
+
+            board.updateMoveToBoard("White", "D7");
+            board.updateMoveToBoard("White", "D6");
+            board.updateMoveToBoard("White", "D5");
+
+            game.eliminate(player1, board, "D5");
+            game.eliminate(player2, board, "A1");
+
+            Assert.That(player1.getPlayedPos().Contains("A1") == true);
+            Assert.That(player2.getPlayedPos().Contains("D5") == true);
+        }
     }
 }

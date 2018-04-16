@@ -143,6 +143,7 @@ namespace Morabaraba
             {
                 if (player.currentPlayer() == "Black")
                 {
+                    if (!player.playerOwnPosition(position)) return true;
                     if (cowIn_MillPos(player.getMills(), position) && numberOf_Cow_NotInMill(player) == 0)
                     {
                         return false;
