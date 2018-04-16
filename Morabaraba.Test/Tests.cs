@@ -84,6 +84,37 @@ namespace Morabaraba.Test
         }
 
         [Test]
+        public void BlackCowsGivenFirstChance()
+        {
+            Game game = new Game();
+            string currentPlayer = game.getCurrentPlayer();
+            Assert.AreEqual("Black", currentPlayer);
+        }
+
+        [Test]
+        public void CanOnlyMoveToConnectedSpace()
+        {
+            Game game = new Game();
+            IPlayer player = new Player("Black");
+            Board board = new Board();
+
+            player.getState();
+            game.makeMove(board, player, "A1", "A4");
+            game.makeMove(board, player, "F6", "F4");
+            game.makeMove(board, player, "D1", "F4");
+            Assert.AreEqual(true, game.checkNeighbours("A1").Contains("A4"));
+            Assert.AreEqual(true, game.checkNeighbours("F6").Contains("F4"));
+            Assert.AreEqual(false, game.checkNeighbours("D1").Contains("F4"));
+        }
+
+        public void CanOnlyMoveToAnEmptySpace()
+        {
+            Game game = new Game();
+            IPlayer player = new Player("Black");
+            Board board = new Board();
+        }
+
+        [Test]
         public void Cow_in_a_mill_when_nonMill_cows_exist_cannot_be_shot()
         {
             IPlayer player1 = new Player("Black");
@@ -222,5 +253,14 @@ namespace Morabaraba.Test
             Assert.That(game.getPieceAtPos("D5", board)== ' ');
         }
         
+=======
+            player.getState();
+            game.makeMove(board, player, "A1", "A4");
+            game.makeMove(board, player, "F6", "F4");
+            game.makeMove(board, player, "D1", "F4");
+
+            
+        }
+>>>>>>> adcee6d61413575cdbfc28dcdeec149640b43409
     }
 }
