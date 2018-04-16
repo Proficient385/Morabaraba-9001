@@ -306,14 +306,14 @@ namespace Morabaraba.Test
             board.updateMoveToBoard("White", "D5");
             player2.AddMills(new List<string> { "D7", "D6", "D5" });
 
-            Assert.That(game.getPieceAtPos("A1") == 'b');
-            Assert.That(game.getPieceAtPos("D5") == 'w');
+            Assert.That(game.getPieceAtPos("A1",board) == 'b');
+            Assert.That(game.getPieceAtPos("D5", board) == 'w');
 
             game.eliminate(player1, board, "A1");
             game.eliminate(player2, board, "D5");
 
-            Assert.That(game.getPieceAtPos("A1")==' ');
-            Assert.That(game.getPieceAtPos("D5")== ' ');
+            Assert.That(game.getPieceAtPos("A1", board) ==' ');
+            Assert.That(game.getPieceAtPos("D5", board) == ' ');
         }
         
         

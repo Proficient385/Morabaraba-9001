@@ -17,9 +17,7 @@ namespace Morabaraba
 
         private IPlayer playerBlack;
         private IPlayer playerWhite;
-
-        private IPlayer Black;
-        private IPlayer White;
+        
         private IBoard Board;
 
         public Game()
@@ -32,10 +30,6 @@ namespace Morabaraba
             lastMoveWhite = new string[] { "", "" };
             playerBlack = new Player("Black");
             playerWhite = new Player("White");
-            Board = new Board();
-            possibleMoves = generatePossibleMoves();
-            Black = new Player("Black");
-            White = new Player("White");
             Board = new Board();
             possibleMoves = generatePossibleMoves();
             
@@ -266,6 +260,11 @@ namespace Morabaraba
 
         public char getPieceAtPos(string position)
         {
+            return getPieceAtPos(position, Board);
+        }
+
+        public char getPieceAtPos(string position, IBoard Board)
+        {
             char[,] gameBoard = Board.getBoard();
             switch (position)
             {
@@ -298,7 +297,6 @@ namespace Morabaraba
         }
 
 
-
         private bool invalidKill(IPlayer player, IBoard board, string position)
         {
             if (!isValidPosition(position))
@@ -308,7 +306,7 @@ namespace Morabaraba
                 return true;
             }
 
-            char piece = getPieceAtPos(position);
+            char piece = getPieceAtPos(position,board);
             //Console.WriteLine(piece);
             if (piece == ' ')
             {
@@ -320,9 +318,6 @@ namespace Morabaraba
             {
                 if (player.currentPlayer() == "Black")
                 {
-
-                    if (cowIn_MillPos(playerWhite.getMills(), position) && numberOf_Cow_NotInMill(playerWhite) == 0)
-
                     if (!player.playerOwnPosition(position)) return true;
                     if (cowIn_MillPos(player.getMills(), position) && numberOf_Cow_NotInMill(player) == 0)
 
@@ -338,9 +333,6 @@ namespace Morabaraba
                 }
                 else if (player.currentPlayer() == "White")
                 {
-
-                    if (cowIn_MillPos(playerBlack.getMills(), position) && numberOf_Cow_NotInMill(playerBlack) == 0)
-
                     if (cowIn_MillPos(player.getMills(), position) && numberOf_Cow_NotInMill(player) == 0)
                     {
                         // Console.WriteLine("Cannot kill a cow already\n in a mill, try\n another cow");
