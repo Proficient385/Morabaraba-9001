@@ -185,5 +185,42 @@ namespace Morabaraba.Test
             Assert.That(player1.getPlayedPos().Contains("A1") == true);
             Assert.That(player2.getPlayedPos().Contains("D5") == true);
         }
+
+        [Test]
+        public void Shot_cows_are_removed_from_the_board()
+        {
+            IPlayer player1 = new Player("Black");
+            IPlayer player2 = new Player("White");
+            Game game = new Game();
+            IBoard board = new Board();
+
+            player1.addPlayedPositions("A1");
+            player1.addPlayedPositions("A4");
+            player1.addPlayedPositions("A7");
+            player1.AddMills(new List<string> { "A1", "A4", "A7" });
+
+            board.updateMoveToBoard("Black", "A1");
+            board.updateMoveToBoard("Black", "A4");
+            board.updateMoveToBoard("Black", "A7");
+
+            player2.addPlayedPositions("D7");
+            player2.addPlayedPositions("D6");
+            player2.addPlayedPositions("D5");
+            
+            board.updateMoveToBoard("White", "D7");
+            board.updateMoveToBoard("White", "D6");
+            board.updateMoveToBoard("White", "D5");
+            player2.AddMills(new List<string> { "D7", "D6", "D5" });
+
+            Assert.That(game.getPieceAtPos("A1", board) == 'b');
+            Assert.That(game.getPieceAtPos("D5", board) == 'w');
+
+            game.eliminate(player1, board, "A1");
+            game.eliminate(player2, board, "D5");
+
+            Assert.That(game.getPieceAtPos("A1",board)==' ');
+            Assert.That(game.getPieceAtPos("D5", board)== ' ');
+        }
+        
     }
 }
