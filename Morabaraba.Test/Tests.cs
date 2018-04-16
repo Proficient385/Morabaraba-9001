@@ -83,5 +83,33 @@ namespace Morabaraba.Test
 
         }
 
+        [Test]
+
+        public void A_maximum_of_12_placements_per_player_are_allowed()
+        {
+            Game myGame = new Game();
+
+            myGame.makePlacement("A1");
+            myGame.makePlacement("A4");
+            myGame.makePlacement("A7");
+            myGame.makePlacement("B2");
+
+            myGame.makePlacement("B4");
+            myGame.makePlacement("B6");
+            myGame.makePlacement("C3");
+            myGame.makePlacement("C4");
+
+            myGame.makePlacement("C5");
+            myGame.makePlacement("D1");
+            myGame.makePlacement("D2");
+            myGame.makePlacement("D3");
+
+            myGame.makePlacement("D5");
+            myGame.makePlacement("D6");
+
+            Assert.That(myGame.getNUmOfPlacedBlackCows() == 12);
+            Assert.That(myGame.getNUmOfPlacedWhiteCows() == 0);
+        }
+
     }
 }

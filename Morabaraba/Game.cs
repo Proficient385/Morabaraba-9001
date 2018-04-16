@@ -8,16 +8,24 @@ namespace Morabaraba
     {
         private List<string> possibleMoves;
         private string currentPlayer;
+        private int blackPlacementCount;
+        private int whitePlacementCount;
+        private string[] lastMoveBlack;
+        private string[] lastMoveWhite;
 
-        private IPlayer player1;
-        private IPlayer player2;
+        private IPlayer playerBlack;
+        private IPlayer playerWhite;
         private IBoard Board;
 
         public Game()
         {
             currentPlayer = "Black";
-            player1 = new Player("Black");
-            player2 = new Player("White");
+            blackPlacementCount = 0;
+            whitePlacementCount = 0;
+            lastMoveBlack = new string[] { "", "" };
+            lastMoveWhite = new string[] { "", "" };
+            playerBlack = new Player("Black");
+            playerWhite = new Player("White");
             Board = new Board();
             possibleMoves = generatePossibleMoves();
         }
@@ -26,14 +34,70 @@ namespace Morabaraba
             return currentPlayer;
         }
         
-        public void makeMove(Board gameBoard, string Position) 
+        public void makePlacement(string Position) 
         {
-            if (player.getState() == "Placing")
+            if(currentPlayer == "Black" && blackPlacementCount != 12)
             {
-                gameBoard.updateMoveToBoard(currentPlayer, Position);
+               if (playerBlack.getState() == "Placing")
+                {
+                   blackPlacementCount++;
+                   Board.updateMoveToBoard(currentPlayer, Position);
+                   playerBlack.updateState();
+                }
+            }
+            if(currentPlayer == "White" && whitePlacementCount != 12)
+            {
+                if (playerWhite.getState() == "Placing")
+                {
+                   whitePlacementCount++;
+                   Board.updateMoveToBoard(currentPlayer, Position);
+                   playerWhite.updateState();
+                }
+            }
+
+        }
+
+        public void makeMove(string moveFrom, string moveTo)
+        {
+            if(currentPlayer == "Black" && playerBlack.getState()=="Moving")
+            {
+                Board.updateMoveFromBoard(moveFrom);
+                Board.updateMoveToBoard(currentPlayer,moveTo);
+                lastMoveBlack[0] = moveFrom;
+                lastMoveBlack[1] = moveTo;
+            }
+
+            if (currentPlayer == "White" && playerWhite.getState() == "Moving")
+            {
+                Board.updateMoveFromBoard(moveFrom);
+                Board.updateMoveToBoard(currentPlayer, moveTo);
+                lastMoveWhite[0] = moveFrom;
+                lastMoveWhite[1] = moveTo;
             }
         }
- 
+
+        public int getNUmOfPlacedBlackCows()
+        {
+            return blackPlacementCount;
+        }
+
+        public int getNUmOfPlacedWhiteCows()
+        {
+            return whitePlacementCount;
+        }
+
+        public string[] getLastMove()
+        {
+            if(currentPlayer == "Black")
+            {
+               return lastMoveBlack;
+            }
+            else
+            {
+                return lastMoveWhite;
+            }
+            
+        }
         List<string> generatePossibleMoves()
         {
             return new List<string> { "A1","A4","A7",
@@ -93,7 +157,7 @@ namespace Morabaraba
             char[,] gameBoard = Board.getBoard();
             switch(position)
             {
-                case "A1":return gameBoard[0, 0];
+                case "A1": return gameBoard[0, 0];
                 case "A4": return gameBoard[0, 1];
                 case "A7": return gameBoard[0, 2];
                 case "B2": return gameBoard[1, 0];
@@ -133,7 +197,7 @@ namespace Morabaraba
             {
                 if (currentPlayer == "Black")
                 {
-                    if (cowIn_MillPos(player2.getMills(), position) && numberOf_Cow_NotInMill(player2) == 0)
+                    if (cowIn_MillPos(playerWhite.getMills(), position) && numberOf_Cow_NotInMill(playerWhite) == 0)
                     {
                         //messageDisplay("Cannot kill a cow already\n in a mill, try\n another cow");
                         return true;
@@ -143,7 +207,7 @@ namespace Morabaraba
                 }
                 else if (currentPlayer == "White")
                 {
-                    if (cowIn_MillPos(player1.getMills(), position) && numberOf_Cow_NotInMill(player1) == 0)
+                    if (cowIn_MillPos(playerBlack.getMills(), position) && numberOf_Cow_NotInMill(playerBlack) == 0)
                     {
                         //messageDisplay("Cannot kill a cow already\n in a mill, try\n another cow");
                         return true;
