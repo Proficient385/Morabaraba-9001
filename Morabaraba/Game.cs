@@ -374,7 +374,7 @@ namespace Morabaraba
 
         public void runGame()
         {
-
+            Board.printBoard(Board.getBoard());
         }
 
 

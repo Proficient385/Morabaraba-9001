@@ -4,9 +4,12 @@ namespace Morabaraba
 {
     class Program
     {
+        
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Game game = new Game();
+            game.runGame();
+            Console.ReadLine();
         }
     }
 }
