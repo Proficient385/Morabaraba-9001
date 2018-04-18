@@ -17,7 +17,7 @@ namespace Morabaraba
 
         private IPlayer playerBlack;
         private IPlayer playerWhite;
-        
+        private Referee referee;
         private IBoard Board;
 
         public Game()
@@ -32,6 +32,8 @@ namespace Morabaraba
             playerWhite = new Player("White");
             Board = new Board();
             possibleMoves = generatePossibleMoves();
+            Board.printBoard(Board.getBoard());
+            referee = new Referee();
             
         }
 
@@ -94,7 +96,8 @@ namespace Morabaraba
         public void makePlacement(string Position) 
 
         {
-            if(currentPlayer == "Black" && blackPlacementCount < 12 && isBlankSpace(Position)== true)
+           
+            if (currentPlayer == "Black" && blackPlacementCount < 12 && isBlankSpace(Position)== true)
             {
               if (playerBlack.getState() == "Placing")
                 {
@@ -374,7 +377,35 @@ namespace Morabaraba
 
         public void runGame()
         {
-            Board.printBoard(Board.getBoard());
+            
+            while(true)
+            {
+                //Console.WriteLine("{0} make move:", currentPlayer);
+                //string to = Console.ReadLine();
+                Console.WriteLine("{0} make move:", currentPlayer);
+                string Position = Console.ReadLine();
+                if (!generatePossibleMoves().Exists(x => x == Position) || !isBlankSpace(Position))
+                {
+                    Board.printBoard(Board.getBoard());
+                    Console.WriteLine("Invalid input or that position is occupied.\nplease try again");
+                    continue;
+                }
+                makePlacement(Position);
+                Board.printBoard(Board.getBoard());
+                if(referee.isMill(playerBlack))
+                {
+                    Console.WriteLine("Choose The position of the white cow to kill:");
+                    string killPos = Console.ReadLine();
+                    //eliminate(playerWhite,Board.getBoard(), killPos);
+                }
+                if (referee.isMill(playerWhite))
+                {
+                    Console.WriteLine("Choose The position of the black cow to kill: ");
+                }
+                swapcurrentPlayer();
+            }
+            
+            
         }
 
 

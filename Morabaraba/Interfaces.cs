@@ -33,6 +33,7 @@ namespace Morabaraba
 
     public interface ICommandLineInterface
     {
+
         void printBoard();
         void printPlayerTurn(string currentPlayer);
 

@@ -24,7 +24,7 @@ namespace Morabaraba
         }
         public void printBoard(char[,] brd)
         {
-            
+            Console.Clear();
             Console.WriteLine(" {0}---------------{1}-------------- {2}", brd[0, 0], brd[0, 1], brd[0, 2]);
             Console.WriteLine("| \\              |             / |");
             Console.WriteLine("|  \\             |            /  |");
