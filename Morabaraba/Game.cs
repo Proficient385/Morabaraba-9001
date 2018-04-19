@@ -374,23 +374,23 @@ namespace Morabaraba
             }
         }
 
-        private void afterMill(IPlayer whoseMill)
-        {
-            char play = ' ';
-            if (whoseMill.currentPlayer() == "Black") play = 'W';
-            else play = 'B';
+        //private void afterMill(IPlayer whoseMill)
+        //{
+        //    char play = ' ';
+        //    if (whoseMill.currentPlayer() == "Black") play = 'W';
+        //    else play = 'B';
 
-            Console.WriteLine("Choose The position of the cow to kill:");
-            tryAgain:
-            string killPos = Console.ReadLine();
-            if (isBlankSpace(killPos) || !generatePossibleMoves().Exists(x => x == killPos) || getPieceAtPos(killPos) != play)
-            {
-                Console.WriteLine("Invalid position.\nTry again");
-                goto tryAgain;
-            }
-            eliminate(whoseMill, Board, killPos);
+        //    Console.WriteLine("Choose The position of the cow to kill:");
+        //    tryAgain:
+        //    string killPos = Console.ReadLine();
+        //    if (isBlankSpace(killPos) || !generatePossibleMoves().Exists(x => x == killPos) || getPieceAtPos(killPos) != play)
+        //    {
+        //        Console.WriteLine("Invalid position.\nTry again");
+        //        goto tryAgain;
+        //    }
+        //    eliminate(whoseMill, Board, killPos);
             
-        }
+        //}
         public void runGame()
         {
             
@@ -422,23 +422,33 @@ namespace Morabaraba
                 //Check Mill for Black Cows
                 if(referee.isMill(playerBlack))
                 {
-                    afterMill(playerBlack);   
+                    //afterMill(playerBlack);   
+                    Console.WriteLine("Choose The position of the white cow to kill: ");
+                    tryAgain:
+                    string killWhitePos = Console.ReadLine();
+                    if (isBlankSpace(killWhitePos) || !generatePossibleMoves().Exists(x => x == killWhitePos) || getPieceAtPos(killWhitePos) != 'W')
+                    {
+                        Console.WriteLine("Invalid position.\nTry again");
+                        goto tryAgain;
+                    }
+                    eliminate(playerWhite, Board, killWhitePos);
+                    Board.printBoard(Board.getBoard());
 
                 }
                 //Check Mill for White Cows
                 if (referee.isMill(playerWhite))
                 {
-                    afterMill(playerWhite);
-                    //Console.WriteLine("Choose The position of the black cow to kill: ");
-                    //tryAgain:
-                    //string killBlackPos = Console.ReadLine();
-                    //if (isBlankSpace(killBlackPos) || !generatePossibleMoves().Exists(x => x == killBlackPos) || getPieceAtPos(killBlackPos) != 'B')
-                    //{
-                    //    Console.WriteLine("Invalid position.\nTry again");
-                    //    goto tryAgain;
-                    //}
-                    //eliminate(playerBlack, Board, killBlackPos);
-                    //Board.printBoard(Board.getBoard());
+                    //afterMill(playerWhite);
+                    Console.WriteLine("Choose The position of the black cow to kill: ");
+                    tryAgain:
+                    string killBlackPos = Console.ReadLine();
+                    if (isBlankSpace(killBlackPos) || !generatePossibleMoves().Exists(x => x == killBlackPos) || getPieceAtPos(killBlackPos) != 'B')
+                    {
+                        Console.WriteLine("Invalid position.\nTry again");
+                        goto tryAgain;
+                    }
+                    eliminate(playerBlack, Board, killBlackPos);
+                    Board.printBoard(Board.getBoard());
                 }
                 
                 //MOVING
@@ -457,6 +467,8 @@ namespace Morabaraba
                     }
                     makeMove(from, to);
                 }
+                //FLYING
+
                 swapcurrentPlayer();
                 Board.printBoard(Board.getBoard());
 
