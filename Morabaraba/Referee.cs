@@ -6,6 +6,7 @@ namespace Morabaraba
 {
     public class Referee : IReferee
     {
+
         private List<List<string>> possible_Mills;
         public Referee()
         {

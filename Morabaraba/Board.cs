@@ -89,11 +89,11 @@ namespace Morabaraba
             char symbol = ' ';
             if(player == "Black")
             {
-                symbol = 'b';
+                symbol = 'B';
             }
             else
             {
-                symbol = 'w';
+                symbol = 'W';
             }
             updateBoard(PositionTo, symbol);
         }

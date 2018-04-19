@@ -96,7 +96,7 @@ namespace Morabaraba
         public void makePlacement(string Position) 
 
         {
-           
+            
             if (currentPlayer == "Black" && blackPlacementCount < 12 && isBlankSpace(Position)== true)
             {
               if (playerBlack.getState() == "Placing")
@@ -374,35 +374,92 @@ namespace Morabaraba
             }
         }
 
+        private void afterMill(IPlayer whoseMill)
+        {
+            char play = ' ';
+            if (whoseMill.currentPlayer() == "Black") play = 'W';
+            else play = 'B';
 
+            Console.WriteLine("Choose The position of the cow to kill:");
+            tryAgain:
+            string killPos = Console.ReadLine();
+            if (isBlankSpace(killPos) || !generatePossibleMoves().Exists(x => x == killPos) || getPieceAtPos(killPos) != play)
+            {
+                Console.WriteLine("Invalid position.\nTry again");
+                goto tryAgain;
+            }
+            eliminate(whoseMill, Board, killPos);
+            
+        }
         public void runGame()
         {
             
-            while(true)
+            while (true)
             {
-                //Console.WriteLine("{0} make move:", currentPlayer);
-                //string to = Console.ReadLine();
-                Console.WriteLine("{0} make move:", currentPlayer);
-                string Position = Console.ReadLine();
-                if (!generatePossibleMoves().Exists(x => x == Position) || !isBlankSpace(Position))
+                playerBlack.updateState();
+                playerWhite.updateState();
+               
+               ///PLACING
+               if(playerWhite.getState() == "Placing" || playerBlack.getState() == "Placing")
                 {
+                    
+                    Console.WriteLine("{0} make move:", currentPlayer);
+                    tryAgain:
+                    string Position = Console.ReadLine();
+                    //Check if the move is valid
+
+                    if (!generatePossibleMoves().Exists(x => x == Position) || !isBlankSpace(Position))
+                    {
+                        Board.printBoard(Board.getBoard());
+                        Console.WriteLine("Invalid input or that position is occupied.\nplease try again");
+                        goto tryAgain;
+                    }
+                    makePlacement(Position);
                     Board.printBoard(Board.getBoard());
-                    Console.WriteLine("Invalid input or that position is occupied.\nplease try again");
-                    continue;
+                    
                 }
-                makePlacement(Position);
-                Board.printBoard(Board.getBoard());
+                
+                //Check Mill for Black Cows
                 if(referee.isMill(playerBlack))
                 {
-                    Console.WriteLine("Choose The position of the white cow to kill:");
-                    string killPos = Console.ReadLine();
-                    //eliminate(playerWhite,Board.getBoard(), killPos);
+                    afterMill(playerBlack);   
+
                 }
+                //Check Mill for White Cows
                 if (referee.isMill(playerWhite))
                 {
-                    Console.WriteLine("Choose The position of the black cow to kill: ");
+                    afterMill(playerWhite);
+                    //Console.WriteLine("Choose The position of the black cow to kill: ");
+                    //tryAgain:
+                    //string killBlackPos = Console.ReadLine();
+                    //if (isBlankSpace(killBlackPos) || !generatePossibleMoves().Exists(x => x == killBlackPos) || getPieceAtPos(killBlackPos) != 'B')
+                    //{
+                    //    Console.WriteLine("Invalid position.\nTry again");
+                    //    goto tryAgain;
+                    //}
+                    //eliminate(playerBlack, Board, killBlackPos);
+                    //Board.printBoard(Board.getBoard());
+                }
+                
+                //MOVING
+
+                if (playerBlack.getState() == "Moving" || playerWhite.getState() == "Moving")
+                {
+                    TryAgain:
+                    Console.WriteLine("{0} Select the postion to move from", currentPlayer);
+                    string from = Console.ReadLine();
+                    Console.WriteLine("{0} Select position to move to", currentPlayer);
+                    string to = Console.ReadLine();
+                    if(!checkNeighbours(from).Exists(x => x == to))
+                    {
+                        Console.WriteLine("Invalid move.\n try again");
+                        goto TryAgain;
+                    }
+                    makeMove(from, to);
                 }
                 swapcurrentPlayer();
+                Board.printBoard(Board.getBoard());
+
             }
             
             
