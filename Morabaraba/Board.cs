@@ -25,25 +25,28 @@ namespace Morabaraba
         public void printBoard(char[,] brd)
         {
             Console.Clear();
-            Console.WriteLine(" {0}---------------{1}-------------- {2}", brd[0, 0], brd[0, 1], brd[0, 2]);
-            Console.WriteLine("| \\              |             / |");
-            Console.WriteLine("|  \\             |            /  |");
-            Console.WriteLine("|   {0}------------{1}-----------{2}   |", brd[1, 0], brd[1, 1], brd[1, 2]);
-            Console.WriteLine("|   |\\           |          /|   |");
-            Console.WriteLine("|   | \\          |         / |   |");
-            Console.WriteLine("|   |  {0}---------{1}--------{2}  |   |", brd[2, 0], brd[2, 1], brd[2, 2]);
-            Console.WriteLine("|   |  |                  |  |   |");
-            Console.WriteLine("|   |  |                  |  |   |");
-            Console.WriteLine("{0}---{1}--{2}                  {3}--{4}---{5} ", brd[3, 0], brd[3, 1], brd[3, 2], brd[4, 0], brd[4, 1], brd[4, 2]);
-            Console.WriteLine("|   |  |                  |  |   |");
-            Console.WriteLine("|   |  |                  |  |   |");
-            Console.WriteLine("|   |  {0}---------{1}--------{2}  |   |", brd[5, 0], brd[5, 1], brd[5, 2]);
-            Console.WriteLine("|   | /          |         \\ |   |");
-            Console.WriteLine("|   |/           |          \\|   |");
-            Console.WriteLine("|   {0}------------{1}-----------{2}   |", brd[6, 0], brd[6, 1], brd[6, 2]);
-            Console.WriteLine("|  /             |            \\  |");
-            Console.WriteLine("| /              |             \\ |");
-            Console.WriteLine(" {0}---------------{1}-------------- {2}", brd[7, 0], brd[7, 1], brd[7, 2]);
+            Console.WriteLine("     Morabaraba\n");
+            Console.WriteLine("   1   2  3         4       5  6   7 ");
+            Console.WriteLine("A  {0}---------------{1}-------------- {2}", brd[0, 0], brd[0, 1], brd[0, 2]);
+            Console.WriteLine("   | \\              |             / |");
+            Console.WriteLine("   |  \\             |            /  |");
+            Console.WriteLine("B  |   {0}------------{1}-----------{2}   |", brd[1, 0], brd[1, 1], brd[1, 2]);
+            Console.WriteLine("   |   |\\           |          /|   |");
+            Console.WriteLine("   |   | \\          |         / |   |");
+            Console.WriteLine("C  |   |  {0}---------{1}--------{2}  |   |", brd[2, 0], brd[2, 1], brd[2, 2]);
+            Console.WriteLine("   |   |  |                  |  |   |");
+            Console.WriteLine("   |   |  |                  |  |   |");
+            Console.WriteLine("D  {0}---{1}--{2}                  {3}--{4}---{5} ", brd[3, 0], brd[3, 1], brd[3, 2], brd[4, 0], brd[4, 1], brd[4, 2]);
+            Console.WriteLine("   |   |  |                  |  |   |");
+            Console.WriteLine("   |   |  |                  |  |   |");
+            Console.WriteLine("E  |   |  {0}---------{1}--------{2}  |   |", brd[5, 0], brd[5, 1], brd[5, 2]);
+            Console.WriteLine("   |   | /          |         \\ |   |");
+            Console.WriteLine("   |   |/           |          \\|   |");
+            Console.WriteLine("F  |   {0}------------{1}-----------{2}   |", brd[6, 0], brd[6, 1], brd[6, 2]);
+            Console.WriteLine("   |  /             |            \\  |");
+            Console.WriteLine("   | /              |             \\ |");
+            Console.WriteLine("G  {0}---------------{1}-------------- {2}", brd[7, 0], brd[7, 1], brd[7, 2]);
+            Console.WriteLine("\n\n");
         }
 
         public void updateBoard(string position, char symbol)

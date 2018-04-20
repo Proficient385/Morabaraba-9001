@@ -374,33 +374,17 @@ namespace Morabaraba
             }
         }
 
-        //private void afterMill(IPlayer whoseMill)
-        //{
-        //    char play = ' ';
-        //    if (whoseMill.currentPlayer() == "Black") play = 'W';
-        //    else play = 'B';
-
-        //    Console.WriteLine("Choose The position of the cow to kill:");
-        //    tryAgain:
-        //    string killPos = Console.ReadLine();
-        //    if (isBlankSpace(killPos) || !generatePossibleMoves().Exists(x => x == killPos) || getPieceAtPos(killPos) != play)
-        //    {
-        //        Console.WriteLine("Invalid position.\nTry again");
-        //        goto tryAgain;
-        //    }
-        //    eliminate(whoseMill, Board, killPos);
-            
-        //}
+       
         public void runGame()
         {
             
-            while (true)
+            while(!referee.Winner(playerBlack, playerWhite))
             {
                 playerBlack.updateState();
                 playerWhite.updateState();
-               
-               ///PLACING
-               if(playerWhite.getState() == "Placing" || playerBlack.getState() == "Placing")
+
+                ///PLACING
+                if (playerWhite.getState() == "Placing" || playerBlack.getState() == "Placing")
                 {
                     
                     Console.WriteLine("{0} make move:", currentPlayer);
@@ -424,12 +408,12 @@ namespace Morabaraba
                 {
                     //afterMill(playerBlack);   
                     Console.WriteLine("Choose The position of the white cow to kill: ");
-                    tryAgain:
+                    tryAgain1:
                     string killWhitePos = Console.ReadLine();
                     if (isBlankSpace(killWhitePos) || !generatePossibleMoves().Exists(x => x == killWhitePos) || getPieceAtPos(killWhitePos) != 'W')
                     {
                         Console.WriteLine("Invalid position.\nTry again");
-                        goto tryAgain;
+                        goto tryAgain1;
                     }
                     eliminate(playerWhite, Board, killWhitePos);
                     Board.printBoard(Board.getBoard());
@@ -440,12 +424,12 @@ namespace Morabaraba
                 {
                     //afterMill(playerWhite);
                     Console.WriteLine("Choose The position of the black cow to kill: ");
-                    tryAgain:
+                    tryAgain2:
                     string killBlackPos = Console.ReadLine();
                     if (isBlankSpace(killBlackPos) || !generatePossibleMoves().Exists(x => x == killBlackPos) || getPieceAtPos(killBlackPos) != 'B')
                     {
                         Console.WriteLine("Invalid position.\nTry again");
-                        goto tryAgain;
+                        goto tryAgain2;
                     }
                     eliminate(playerBlack, Board, killBlackPos);
                     Board.printBoard(Board.getBoard());
@@ -455,26 +439,47 @@ namespace Morabaraba
 
                 if (playerBlack.getState() == "Moving" || playerWhite.getState() == "Moving")
                 {
-                    TryAgain:
+                    TryAgain3:
                     Console.WriteLine("{0} Select the postion to move from", currentPlayer);
-                    string from = Console.ReadLine();
+                    string moveFrom = Console.ReadLine();
                     Console.WriteLine("{0} Select position to move to", currentPlayer);
-                    string to = Console.ReadLine();
-                    if(!checkNeighbours(from).Exists(x => x == to))
+                    string moveTo = Console.ReadLine();
+                    if(!checkNeighbours(moveFrom).Exists(x => x == moveTo) || !possibleMoves.Exists(x => x == moveFrom) || !possibleMoves.Exists(x => x == moveTo))
                     {
                         Console.WriteLine("Invalid move.\n try again");
-                        goto TryAgain;
+                        goto TryAgain3;
                     }
-                    makeMove(from, to);
+                    makeMove(moveFrom, moveTo);
+                    Board.printBoard(Board.getBoard());
                 }
                 //FLYING
-
+                if(playerBlack.getState() == "Flying" || playerWhite.getState() == "fLying")
+                {
+                    TryAgain4:
+                    Console.WriteLine("{0} Select the position to fly from", currentPlayer);
+                    string flyFrom = Console.ReadLine();
+                    Console.WriteLine("{0} Select position to fly to", currentPlayer);
+                    string flyTo = Console.ReadLine();
+                    if(!possibleMoves.Exists(x => x == flyFrom) || !possibleMoves.Exists(x => x == flyTo))
+                    {
+                        Console.WriteLine("Invalid move.\n try again");
+                        goto TryAgain4;
+                    }
+                    makeMove(flyFrom, flyTo);
+                    Board.printBoard(Board.getBoard());
+                }
                 swapcurrentPlayer();
                 Board.printBoard(Board.getBoard());
+                Console.WriteLine("{0} black players left", playerBlack.numberOfCows());
+                Console.WriteLine("{0} white players left", playerWhite.numberOfCows());
+
 
             }
-            
-            
+
+            if (playerBlack.numberOfCows() == 2) Console.WriteLine("GAMEOVER!!!!\nWhite has won");
+            else if (playerWhite.numberOfCows() == 2) Console.WriteLine("GAMEOVER!!!!\nBlack has won");
+            else Console.WriteLine("GAMEOVER!!!!\nIt's a draw");
+
         }
 
 

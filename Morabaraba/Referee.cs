@@ -73,9 +73,10 @@ namespace Morabaraba
             throw new NotImplementedException();
         }
 
-        public void Winner()
+        public bool Winner(IPlayer player1, IPlayer player2)
         {
-            throw new NotImplementedException();
+            if (player1.numberOfCows() == 2 || player2.numberOfCows() == 2) return true;
+            return false;
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Morabaraba
     {
         bool IsDraw();
         void play();
-        void Winner();
+        bool Winner(IPlayer player1, IPlayer player2);
         bool isMill(IPlayer player);
     }
 
