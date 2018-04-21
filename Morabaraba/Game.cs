@@ -410,7 +410,7 @@ namespace Morabaraba
                     Console.WriteLine("Choose The position of the white cow to kill: ");
                     tryAgain1:
                     string killWhitePos = Console.ReadLine();
-                    if (isBlankSpace(killWhitePos) || !generatePossibleMoves().Exists(x => x == killWhitePos) || getPieceAtPos(killWhitePos) != 'W')
+                    if (isBlankSpace(killWhitePos) || !generatePossibleMoves().Exists(x => x == killWhitePos) || getPieceAtPos(killWhitePos) != 'w')
                     {
                         Console.WriteLine("Invalid position.\nTry again");
                         goto tryAgain1;
@@ -426,7 +426,7 @@ namespace Morabaraba
                     Console.WriteLine("Choose The position of the black cow to kill: ");
                     tryAgain2:
                     string killBlackPos = Console.ReadLine();
-                    if (isBlankSpace(killBlackPos) || !generatePossibleMoves().Exists(x => x == killBlackPos) || getPieceAtPos(killBlackPos) != 'B')
+                    if (isBlankSpace(killBlackPos) || !generatePossibleMoves().Exists(x => x == killBlackPos) || getPieceAtPos(killBlackPos) != 'b')
                     {
                         Console.WriteLine("Invalid position.\nTry again");
                         goto tryAgain2;
