@@ -11,6 +11,7 @@ namespace Morabaraba
         private List<string> playedPos;
         private List<List<string>> mill_List;
         private string symbol;
+        private int placementCount;
 
         public Player(string symbol)
         {
@@ -19,6 +20,7 @@ namespace Morabaraba
             state = "Placing";
             playedPos = new List<string>();
             mill_List = new List<List<string>>();
+            placementCount = 0;
         }
 
 
@@ -90,6 +92,47 @@ namespace Morabaraba
         {
             removePlayedPositions(position);
             cowsLeft--;
+        }
+        
+        public void makePlacement(string Position, Board board)
+
+        {
+
+            if ( placementCount < 12)
+            {
+                if (state == "Placing" && placementCount < 12 && board.getPieceAtPos(Position) == ' ')
+                {
+                    placementCount++;
+                    board.updateMoveToBoard(symbol, Position);
+                    board.updateNumberOfCows();
+
+                    addPlayedPositions(Position);
+                    updateState();
+                    
+                }
+            }
+
+        }
+
+        public void makeMove(string moveFrom, string moveTo, Board board)
+        {
+
+
+            if (state == "Moving" && board.getPieceAtPos(moveTo) == ' ' && board.getPieceAtPos(moveFrom) != ' ')
+            {
+                board.updateMoveFromBoard(moveFrom);
+                board.updateMoveToBoard(symbol, moveTo);
+
+                addPlayedPositions(moveTo);
+                removePlayedPositions(moveFrom);
+
+            }
+
+        }
+
+        public int getNUmOfPlacedCows()
+        {
+            return placementCount;
         }
     }
 }

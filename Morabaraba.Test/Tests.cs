@@ -83,6 +83,8 @@ namespace Morabaraba.Test
 
         }
 
+        /*
+
         [Test]
         public void BlackCowsGivenFirstChance()
         {
@@ -103,35 +105,36 @@ namespace Morabaraba.Test
             Assert.AreEqual(true, game.checkNeighbours("F6").Contains("F4"));
             Assert.AreEqual(false, game.checkNeighbours("D1").Contains("F4"));
         }
-
+        */
         [Test]
 
         public void A_maximum_of_12_placements_per_player_are_allowed()
         {
             //Sakhele
+            Board board = new Board();
+            Player player = new Player("Black");
+            
 
-            Game myGame = new Game();
+            player.makePlacement("A1" , board);
+            player.makePlacement("A4", board);
+            player.makePlacement("A7", board);
+            player.makePlacement("B2", board);
 
-            myGame.makePlacement("A1");
-            myGame.makePlacement("A4");
-            myGame.makePlacement("A7");
-            myGame.makePlacement("B2");
+            player.makePlacement("B4", board);
+            player.makePlacement("B6", board);
+            player.makePlacement("C3", board);
+            player.makePlacement("C4", board);
 
-            myGame.makePlacement("B4");
-            myGame.makePlacement("B6");
-            myGame.makePlacement("C3");
-            myGame.makePlacement("C4");
+            player.makePlacement("C5", board);
+            player.makePlacement("D1", board);
+            player.makePlacement("D2", board);
+            player.makePlacement("D3", board);
 
-            myGame.makePlacement("C5");
-            myGame.makePlacement("D1");
-            myGame.makePlacement("D2");
-            myGame.makePlacement("D3");
+            player.makePlacement("D5", board);
+            player.makePlacement("D6", board);
 
-            myGame.makePlacement("D5");
-            myGame.makePlacement("D6");
-
-            Assert.That(myGame.getNUmOfPlacedBlackCows() == 12);
-            Assert.That(myGame.getNUmOfPlacedWhiteCows() == 0);
+            Assert.That(player.getNUmOfPlacedCows() == 12);
+            
         }
 
         [Test]
@@ -140,43 +143,36 @@ namespace Morabaraba.Test
         {
             //Sakhele
 
-            Game myGame = new Game();
+            Board board = new Board();
+            Player player = new Player("Black");
 
-            myGame.makePlacement("A1");
-            myGame.makePlacement("A4");
-            myGame.makePlacement("A7");
-            myGame.makePlacement("B2");
+            player.makePlacement("A1", board);
+            player.makePlacement("A4", board);
+            player.makePlacement("A7", board);
+            player.makePlacement("B2" ,board);
 
-            myGame.makeMove("A1", "D1");
+            player.makeMove("A1", "D1", board);
 
-            Assert.That(myGame.getLastMove()[0] == "");
-            Assert.That(myGame.getLastMove()[1] == "");
+            Assert.That(board.getPieceAtPos("D1") == ' ');
+           
         }
 
         [Test]
         public void Cows_can_only_be_placed_on_empty_spaces()
         {
             //Sakhele
-
-            Game myGame = new Game();
-
-            myGame.makePlacement("A1");
-            myGame.swapcurrentPlayer();
-            myGame.makePlacement("A1");
-            myGame.makePlacement("A4");
-
-            Assert.That(myGame.getPieceAtPos("A1") == 'b');
-            Assert.That(myGame.getPieceAtPos("A4") == 'w');
-        }
-
-        [Test]
-        public void CanOnlyMoveToAnEmptySpace()
-        {
-            Game game = new Game();
-            IPlayer player = new Player("Black");
             Board board = new Board();
+            Player player1 = new Player("Black");
+            Player player2 = new Player("White");
+
+            player1.makePlacement("A1", board);
+            player2.makePlacement("A1", board);
+
+            Assert.That(board.getPieceAtPos("A1") == 'b');
         }
 
+
+        /*
         [Test]
         public void Cow_in_a_mill_when_nonMill_cows_exist_cannot_be_shot()
         {
@@ -316,39 +312,36 @@ namespace Morabaraba.Test
             Assert.That(game.getPieceAtPos("D5", board) == ' ');
         }
         
-        
+        */
         [Test]
         public void Can_Only_Move_To_An_EmptySpace()
         {
             //Sakhele
 
-            Game myGame = new Game();
+            Board board = new Board();
+            Player player = new Player("Black");
 
-            myGame.makePlacement("A1");
-            myGame.makePlacement("A4");
-            myGame.makePlacement("A7");
-            myGame.makePlacement("B2");
+            player.makePlacement("A1", board);
+            player.makePlacement("A4", board);
+            player.makePlacement("A7", board);
+            player.makePlacement("B2", board);
 
-            myGame.makePlacement("B4");
-            myGame.makePlacement("B6");
-            myGame.makePlacement("C3");
-            myGame.makePlacement("C4");
+            player.makePlacement("B4", board);
+            player.makePlacement("B6", board);
+            player.makePlacement("C3", board);
+            player.makePlacement("C4", board);
+       
+            player.makePlacement("C5", board);
+            player.makePlacement("D1", board);
+            player.makePlacement("D2", board);
+            player.makePlacement("D3", board);
 
-            myGame.makePlacement("C5");
-            myGame.makePlacement("D1");
-            myGame.makePlacement("D2");
-            myGame.makePlacement("D3");
+            board.updateBoard("E5", 'w');
 
-            myGame.makeMove("D1", "G1");
-            myGame.swapcurrentPlayer();
+            player.makeMove("D3", "E5" , board);
 
-            myGame.makePlacement("G4");
-            myGame.swapcurrentPlayer();
-
-            myGame.makeMove("G1", "G4");
-
-            Assert.That(myGame.getPieceAtPos("G1") == 'b');
-            Assert.That(myGame.getPieceAtPos("G4") == 'w');
+            Assert.That(board.getPieceAtPos("D3") == 'b');
+            Assert.That(board.getPieceAtPos("E5") == 'w');
 
         }
 
@@ -358,28 +351,29 @@ namespace Morabaraba.Test
         {
             //Sakhele
 
-            Game myGame = new Game();
+            Board board = new Board();
+            Player player = new Player("Black");
 
-            myGame.makePlacement("A1");
-            myGame.makePlacement("A4");
-            myGame.makePlacement("A7");
-            myGame.makePlacement("B2");
+            player.makePlacement("A1", board);
+            player.makePlacement("A4", board);
+            player.makePlacement("A7", board);
+            player.makePlacement("B2", board);
 
-            myGame.makePlacement("B4");
-            myGame.makePlacement("B6");
-            myGame.makePlacement("C3");
-            myGame.makePlacement("C4");
+            player.makePlacement("B4", board);
+            player.makePlacement("B6", board);
+            player.makePlacement("C3", board);
+            player.makePlacement("C4", board);
 
-            myGame.makePlacement("C5");
-            myGame.makePlacement("D1");
-            myGame.makePlacement("D2");
-            myGame.makePlacement("D3");
+            player.makePlacement("C5", board);
+            player.makePlacement("D1", board);
+            player.makePlacement("D2", board);
+            player.makePlacement("D3", board);
 
-            myGame.makeMove("D1", "G1");
-            myGame.makeMove("G1", "G4");
+            player.makeMove("C5", "D5", board);
+            player.makeMove("D3", "E5", board);
 
-            Assert.That(myGame.get_Number_of_cows_in_board() == 12);
-            Assert.That(myGame.getPieceAtPos("G4") == 'b');
+            Assert.That(board.getNumberOfcows() == 12);
+            Assert.That(board.getPieceAtPos("D5") == 'b');
         }
 
 

@@ -29,6 +29,9 @@ namespace Morabaraba
         List<List<string>> getMills();
         string getState();
         void updateState();
+        int getNUmOfPlacedCows();
+        void makePlacement(string Position, Board board);
+        void makeMove(string moveFrom, string moveTo, Board board);
     }
 
     public interface ICommandLineInterface

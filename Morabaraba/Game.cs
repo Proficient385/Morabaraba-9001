@@ -26,7 +26,7 @@ namespace Morabaraba
             currentPlayer = "Black";
             blackPlacementCount = 0;
             whitePlacementCount = 0;
-            numberOf_cows_in_the_board = 0;
+            
             lastMoveBlack = new string[] { "", "" };
             lastMoveWhite = new string[] { "", "" };
 
@@ -47,129 +47,15 @@ namespace Morabaraba
             return currentPlayer;
         }
 
-
-
         public int get_Number_of_cows_in_board()
         {
-            return numberOf_cows_in_the_board;
+            return playerBlack.getNUmOfPlacedCows() + playerWhite.getNUmOfPlacedCows();
         }
-
-
-       
-
-
-
-        public void makePlacement(string Position) 
-
-        {
-            
-            if (currentPlayer == "Black" && blackPlacementCount < 12 && isBlankSpace(Position)== true)
-            {
-              if (playerBlack.getState() == "Placing")
-                {
-                   blackPlacementCount++;
-                   Board.updateMoveToBoard(currentPlayer, Position);
-                   
-                   playerBlack.addPlayedPositions(Position);
-                   playerBlack.updateState();
-                   numberOf_cows_in_the_board++;
-                }
-            }
-            if(currentPlayer == "White" && whitePlacementCount < 12 && isBlankSpace(Position) == true)
-            {
-                if (playerWhite.getState() == "Placing")
-                {
-                   whitePlacementCount++;
-                   Board.updateMoveToBoard(currentPlayer, Position);
-                   
-                   playerWhite.addPlayedPositions(Position);
-                   playerWhite.updateState();
-                   numberOf_cows_in_the_board++;
-                }
-            }
-
-
-        }
-
-
-        public void makeMove(string moveFrom, string moveTo)
-        {
-
-            //   if (player.getState() == "Moving" || checkNeighbours(fromPos).Contains(toPos))
-            if (currentPlayer == "Black" && playerBlack.getState()=="Moving" && isBlankSpace(moveTo))
-            {
-                Board.updateMoveFromBoard(moveFrom);
-                Board.updateMoveToBoard(currentPlayer,moveTo);
-
-                playerBlack.addPlayedPositions(moveTo);
-                playerBlack.removePlayedPositions(moveFrom);
-
-                lastMoveBlack[0] = moveFrom;
-                lastMoveBlack[1] = moveTo;
-            }
-
-            if (currentPlayer == "White" && playerWhite.getState() == "Moving" && isBlankSpace(moveTo))
-            {
-                Board.updateMoveFromBoard(moveFrom);
-                Board.updateMoveToBoard(currentPlayer, moveTo);
-
-                playerWhite.addPlayedPositions(moveTo);
-                playerWhite.removePlayedPositions(moveFrom);
-
-                lastMoveWhite[0] = moveFrom;
-                lastMoveWhite[1] = moveTo;
-            }
-        }
-
-
-
-        public int getNUmOfPlacedBlackCows()
-        {
-            return blackPlacementCount;
-        }
-
-
-
-        public int getNUmOfPlacedWhiteCows()
-        {
-            return whitePlacementCount;
-        }
-
-
-
-        public string[] getLastMove()
-        {
-            if (currentPlayer == "Black")
-            {
-                return lastMoveBlack;
-            }
-            else
-            {
-                return lastMoveWhite;
-
-            }
-        }
-
-
 
         public bool isBlankSpace(string pos)
         {
             return getPieceAtPos(pos) == ' ';
         }
-
-
-
-        
-
-
-
-        
-
-
-
-      
-
-
 
         private bool cowIn_MillPos(List<List<string>> mill_List, string pos)
         {
@@ -179,8 +65,6 @@ namespace Morabaraba
             }
             return false;
         }
-
-
 
         private int numberOf_Cow_NotInMill(IPlayer player)
         {
@@ -243,7 +127,7 @@ namespace Morabaraba
             return ' ';
         }
 
-
+/*
         private bool invalidKill(IPlayer player, IBoard board, string position)
         {
             if (!isValidPosition(position))
@@ -317,11 +201,11 @@ namespace Morabaraba
                 Console.WriteLine("KILLLLLLEDDDD!");
             }
         }
-
+ */
        
         public void runGame()
         {
-            
+           /* 
             while(!referee.Winner(playerBlack, playerWhite))
             {
                 playerBlack.updateState();
@@ -423,10 +307,12 @@ namespace Morabaraba
             if (playerBlack.numberOfCows() == 2) Console.WriteLine("GAMEOVER!!!!\nWhite has won");
             else if (playerWhite.numberOfCows() == 2) Console.WriteLine("GAMEOVER!!!!\nBlack has won");
             else Console.WriteLine("GAMEOVER!!!!\nIt's a draw");
+            */
 
         }
-
+        
 
 
     }
+    
 }

@@ -7,7 +7,8 @@ namespace Morabaraba
         
         static void Main(string[] args)
         {
-            Game game = new Game();
+
+            Game game = new Game(new Player("Black"), new Player("White"),new Board(), new Referee());
             game.runGame();
             Console.ReadLine();
         }
