@@ -6,11 +6,12 @@ namespace Morabaraba
 {
     public class Referee : IReferee
     {
-
+        private string currentPlayer;
         private List<List<string>> possible_Mills;
         public Referee()
         {
             possible_Mills = generate_possible_Mills();
+            currentPlayer = "Black";
         }
 
         private List<List<string>> generate_possible_Mills()
@@ -78,5 +79,25 @@ namespace Morabaraba
             if (player1.numberOfCows() == 2 || player2.numberOfCows() == 2) return true;
             return false;
         }
+
+        public void swapcurrentPlayer()
+        {
+            switch (currentPlayer)
+
+            {
+                case "Black":
+                    currentPlayer = "White";
+                    return;
+                case "White":
+                    currentPlayer = "Black";
+                    return;
+            }
+        }
+
+        public string getcurrentPlayer()
+        {
+            return currentPlayer;
+        }
     }
+
 }
