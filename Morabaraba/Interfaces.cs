@@ -11,8 +11,13 @@ namespace Morabaraba
 
         void updateMoveFromBoard(string PositionTo);
         void printBoard(char[,] brd);
-
+        List<string> checkNeighbours(string position);
         char[,] getBoard();
+        List<string> generatePossibleMoves();
+        bool isValidPosition(string position);
+        char getPieceAtPos(string position);
+        void updateNumberOfCows();
+
     }
 
     public interface IPlayer
@@ -30,8 +35,8 @@ namespace Morabaraba
         string getState();
         void updateState();
         int getNUmOfPlacedCows();
-        void makePlacement(string Position, Board board);
-        void makeMove(string moveFrom, string moveTo, Board board);
+        void makePlacement(string Position, IBoard board);
+        void makeMove(string moveFrom, string moveTo, IBoard board);
     }
 
     public interface ICommandLineInterface
@@ -51,6 +56,8 @@ namespace Morabaraba
         void play();
         bool Winner(IPlayer player1, IPlayer player2);
         bool isMill(IPlayer player);
+        string getcurrentPlayer();
+        void swapcurrentPlayer();
     }
 
 

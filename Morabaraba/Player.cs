@@ -94,7 +94,7 @@ namespace Morabaraba
             cowsLeft--;
         }
         
-        public void makePlacement(string Position, Board board)
+        public void makePlacement(string Position, IBoard board)
 
         {
 
@@ -114,7 +114,7 @@ namespace Morabaraba
 
         }
 
-        public void makeMove(string moveFrom, string moveTo, Board board)
+        public void makeMove(string moveFrom, string moveTo, IBoard board)
         {
 
 

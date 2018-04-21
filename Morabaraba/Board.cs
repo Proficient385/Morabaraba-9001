@@ -30,7 +30,7 @@ namespace Morabaraba
         {
             Console.Clear();
             Console.WriteLine("     Morabaraba\n");
-            Console.WriteLine("   1   2  3         4       5  6   7 ");
+            Console.WriteLine("   1   2  3         4       5  6   7  \n");
             Console.WriteLine("A  {0}---------------{1}-------------- {2}", brd[0, 0], brd[0, 1], brd[0, 2]);
             Console.WriteLine("   | \\              |             / |");
             Console.WriteLine("   |  \\             |            /  |");
@@ -165,7 +165,7 @@ namespace Morabaraba
             return gameBoard;
         }
 
-        private bool isValidPosition(string position)
+        public bool isValidPosition(string position)
         {
             return possibleMoves.Contains(position);
         }
@@ -210,7 +210,7 @@ namespace Morabaraba
             return null;
         }
 
-        List<string> generatePossibleMoves()
+        public List<string> generatePossibleMoves()
         {
             return new List<string> { "A1","A4","A7",
                                       "B2","B4","B6",

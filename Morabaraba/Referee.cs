@@ -55,7 +55,7 @@ namespace Morabaraba
             for (int i = 0; i < possible_Mills.Count; i++)
             {
                 int count = 0;
-                for (int k = 0; k <playedPos.Count; k++)
+                for (int k = 0; k < playedPos.Count; k++)
                 {
                     if (possible_Mills[i].Contains(playedPos[k])) count++;
                 }
@@ -98,6 +98,7 @@ namespace Morabaraba
         {
             return currentPlayer;
         }
+        
     }
 
 }
