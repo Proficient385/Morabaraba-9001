@@ -22,10 +22,9 @@ namespace Morabaraba
             Board.printBoard(Board.getBoard());
 
         }
-
         public bool isBlankSpace(string pos)
         {
-            return getPieceAtPos(pos) == ' ';
+            return Board.getPieceAtPos(pos) == ' ';
         }
 
         private bool cowIn_MillPos(List<List<string>> mill_List, string pos)
@@ -36,9 +35,6 @@ namespace Morabaraba
             }
             return false;
         }
-
-
-
         private int numberOf_Cow_NotInMill(IPlayer player)
         {
             int count = 0;
@@ -60,47 +56,6 @@ namespace Morabaraba
             }
             return count;
         }
-
-
-        public char getPieceAtPos(string position)
-        {
-            return getPieceAtPos(position, Board);
-        }
-
-        public char getPieceAtPos(string position, IBoard Board)
-        {
-            char[,] gameBoard = Board.getBoard();
-            switch (position)
-            {
-                case "A1": return gameBoard[0, 0];
-                case "A4": return gameBoard[0, 1];
-                case "A7": return gameBoard[0, 2];
-                case "B2": return gameBoard[1, 0];
-                case "B4": return gameBoard[1, 1];
-                case "B6": return gameBoard[1, 2];
-                case "C3": return gameBoard[2, 0];
-                case "C4": return gameBoard[2, 1];
-                case "C5": return gameBoard[2, 2];
-                case "D1": return gameBoard[3, 0];
-                case "D2": return gameBoard[3, 1];
-                case "D3": return gameBoard[3, 2];
-                case "D5": return gameBoard[4, 0];
-                case "D6": return gameBoard[4, 1];
-                case "D7": return gameBoard[4, 2];
-                case "E3": return gameBoard[5, 0];
-                case "E4": return gameBoard[5, 1];
-                case "E5": return gameBoard[5, 2];
-                case "F2": return gameBoard[6, 0];
-                case "F4": return gameBoard[6, 1];
-                case "F6": return gameBoard[6, 2];
-                case "G1": return gameBoard[7, 0];
-                case "G4": return gameBoard[7, 1];
-                case "G7": return gameBoard[7, 2];
-            }
-            return ' ';
-        }
-
-
         private bool invalidKill(IPlayer player, IBoard board, string position)
         {
             if (!Board.isValidPosition(position))
@@ -108,7 +63,7 @@ namespace Morabaraba
                 return true;
             }
 
-            char piece = getPieceAtPos(position, board);
+            char piece = Board.getPieceAtPos(position);
             //Console.WriteLine(piece);
             if (piece == ' ')
             {
@@ -238,8 +193,8 @@ namespace Morabaraba
 
             while (!referee.Winner(playerBlack, playerWhite))
             {
-                //playerBlack.updateState();
-                //playerWhite.updateState();
+                playerBlack.updateState();
+                playerWhite.updateState();
 
                 string currentPlayer = referee.getcurrentPlayer();
                 //PLACING
@@ -285,23 +240,13 @@ namespace Morabaraba
                     
                 }
 
-
-
                 referee.swapcurrentPlayer();
-
                 Board.printBoard(Board.getBoard());
-                
-
-
             }
 
             if (playerBlack.numberOfCows() == 2) Console.WriteLine("GAMEOVER!!!!\nWhite has won");
             else if (playerWhite.numberOfCows() == 2) Console.WriteLine("GAMEOVER!!!!\nBlack has won");
             else Console.WriteLine("GAMEOVER!!!!\nIt's a draw");
-
         }
-
-
-
     }
 }

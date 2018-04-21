@@ -31,7 +31,7 @@ namespace Morabaraba
             Console.Clear();
             Console.WriteLine("     Morabaraba\n");
             Console.WriteLine("   1   2  3         4       5  6   7  \n");
-            Console.WriteLine("A  {0}---------------{1}-------------- {2}", brd[0, 0], brd[0, 1], brd[0, 2]);
+            Console.WriteLine("A  {0} ---------------{1}-------------- {2}", brd[0, 0], brd[0, 1], brd[0, 2]);
             Console.WriteLine("   | \\              |             / |");
             Console.WriteLine("   |  \\             |            /  |");
             Console.WriteLine("B  |   {0}------------{1}-----------{2}   |", brd[1, 0], brd[1, 1], brd[1, 2]);
@@ -49,7 +49,7 @@ namespace Morabaraba
             Console.WriteLine("F  |   {0}------------{1}-----------{2}   |", brd[6, 0], brd[6, 1], brd[6, 2]);
             Console.WriteLine("   |  /             |            \\  |");
             Console.WriteLine("   | /              |             \\ |");
-            Console.WriteLine("G  {0}---------------{1}-------------- {2}", brd[7, 0], brd[7, 1], brd[7, 2]);
+            Console.WriteLine("G  {0} ---------------{1}-------------- {2}", brd[7, 0], brd[7, 1], brd[7, 2]);
             Console.WriteLine("\n\n");
         }
 
