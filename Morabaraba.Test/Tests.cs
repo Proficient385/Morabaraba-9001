@@ -229,77 +229,95 @@ namespace Morabaraba.Test
         }
 
 
+        static object[] noKill =
+     {
+            new object[] { new string[] {"A1","A4","A7","B2"}, true },
+            new object[] { new string[] {"A1","B2","C3", "A4"}, true },
+            new object[] { new string[] {"A1","D1","G1", "A4"}, true },
+            new object[] { new string[] {"A4","B4","C4","A1"}, true },
+            new object[] { new string[] {"A7","B6","C5", "A1"}, true },
+            new object[] { new string[] {"A7","D7","G7", "A1"}, true },
+            new object[] { new string[] {"B2","B4","B6", "A1"}, true },
+            new object[] { new string[] {"B2","D2","F2", "A1"}, true },
+            new object[] { new string[] {"B6","D6","F6", "A1"}, true },
+            new object[] { new string[] {"C3","C4","C5", "A1"}, true },
+            new object[] { new string[] {"C3","D3","E3", "A1"}, true },
+            new object[] { new string[] {"D1","D2","D3", "A1"}, true },
+            new object[] { new string[] {"D5","D6","D7", "A1"}, true },
+            new object[] { new string[] {"E3","E4","E5", "A1"}, true },
+            new object[] { new string[] {"E4","F4","G4", "A1"}, true },
+            new object[] { new string[] {"E5","F6","G7", "A1"}, true },
+            new object[] { new string[] {"F2","F4","F6", "A1"}, true },
+            new object[] { new string[] {"G1","G4","G7", "A1"}, true },
+        };
+
+        [Test]
+        [TestCaseSource(nameof(noKill))]
+        public void Cow_in_a_mill_when_nonMill_cows_exist_cannot_be_shot(string[] c, bool expected)
+        {
+            IPlayer player1 = new Player("Black");
+            IPlayer player2 = new Player("White");
+            IBoard board = new Board();
+            IReferee referee = new Referee();
+            Game game = new Game(player1,player2,board,referee);
+            
+            player1.makePlacement(c[0],board);
+            player1.makePlacement(c[1],board);
+            player1.makePlacement(c[2],board);
+            player1.makePlacement(c[3],board);
+            referee.isMill(player1);
+
+            game.eliminate(player1,board, c[0]);
+            
+            bool result = player1.getPlayedPos().Contains(c[0]);
+
+            Assert.AreEqual(expected, result);
+            
+        }
+
+        static object[] aKill =
+        {
+            new object[] { new string[] {"A1","A4","A7"}, false },
+            new object[] { new string[] {"A1","B2","C3"}, false },
+            new object[] { new string[] {"A1","D1","G1"}, false },
+            new object[] { new string[] {"A4","B4","C4"}, false },
+            new object[] { new string[] {"A7","B6","C5"}, false },
+            new object[] { new string[] {"A7","D7","G7"}, false },
+            new object[] { new string[] {"B2","B4","B6"}, false },
+            new object[] { new string[] {"B2","D2","F2"}, false },
+            new object[] { new string[] {"B6","D6","F6"}, false },
+            new object[] { new string[] {"C3","C4","C5"}, false },
+            new object[] { new string[] {"C3","D3","E3"}, false },
+            new object[] { new string[] {"D1","D2","D3"}, false },
+            new object[] { new string[] {"D5","D6","D7"}, false },
+            new object[] { new string[] {"E3","E4","E5"}, false },
+            new object[] { new string[] {"E4","F4","G4"}, false },
+            new object[] { new string[] {"E5","F6","G7"}, false },
+            new object[] { new string[] {"F2","F4","F6"}, false },
+            new object[] { new string[] {"G1","G4","G7"}, false },
+        };
+        
+        [Test]
+        [TestCaseSource(nameof(aKill))]
+        public void A_cow_in_a_mill_when_all_cows_are_in_mills_can_be_shot(string[] c, bool expected)
+        {
+            IPlayer player1 = new Player("Black");
+            IPlayer player2 = new Player("White");
+            IBoard board = new Board();
+            IReferee referee = new Referee();
+            Game game = new Game(player1,player2,board,referee);
+
+            player1.makePlacement(c[0],board);
+            player1.makePlacement(c[1],board);
+            player1.makePlacement(c[2],board);
+            referee.isMill(player1);
+            
+            game.eliminate(player1, board, c[0]);
+
+            bool result = player1.getPlayedPos().Contains(c[0]);
+            Assert.AreEqual(expected, result);
+        }
         /*
-        [Test]
-        public void Cow_in_a_mill_when_nonMill_cows_exist_cannot_be_shot()
-        {
-            IPlayer player1 = new Player("Black");
-            IPlayer player2 = new Player("White");
-            Game game = new Game();
-            IBoard board = new Board();
-
-            player1.addPlayedPositions("A1");
-            player1.addPlayedPositions("A4");
-            player1.addPlayedPositions("A7");
-            player1.AddMills(new List<string> { "A1", "A4", "A7" });
-            player1.addPlayedPositions("B2");
-
-            board.updateMoveToBoard("Black", "A1");
-            board.updateMoveToBoard("Black", "A4");
-            board.updateMoveToBoard("Black", "A7");
-            board.updateMoveToBoard("Black", "B2");
-
-            player2.addPlayedPositions("D7");
-            player2.addPlayedPositions("D6");
-            player2.addPlayedPositions("D5");
-            player2.AddMills(new List<string> { "D7", "D6", "D5" });
-            player2.addPlayedPositions("E5");
-
-            board.updateMoveToBoard("White", "D7");
-            board.updateMoveToBoard("White", "D6");
-            board.updateMoveToBoard("White", "D5");
-            board.updateMoveToBoard("White", "E5");
-
-            game.eliminate(player1,board, "A1");
-            game.eliminate(player2,board, "D5");
-
-            Assert.That(player1.getPlayedPos().Contains("A1")==true);
-            Assert.That(player2.getPlayedPos().Contains("D5") == true);
-        }
-
-        [Test]
-        public void A_cow_in_a_mill_when_all_cows_are_in_mills_can_be_shot()
-        {
-            IPlayer player1 = new Player("Black");
-            IPlayer player2 = new Player("White");
-            Game game = new Game();
-            IBoard board = new Board();
-
-            player1.addPlayedPositions("A1");
-            player1.addPlayedPositions("A4");
-            player1.addPlayedPositions("A7");
-            player1.AddMills(new List<string> { "A1", "A4", "A7" });
-            
-            board.updateMoveToBoard("Black", "A1");
-            board.updateMoveToBoard("Black", "A4");
-            board.updateMoveToBoard("Black", "A7");
-            
-            player2.addPlayedPositions("D7");
-            player2.addPlayedPositions("D6");
-            player2.addPlayedPositions("D5");
-            player2.AddMills(new List<string> { "D7", "D6", "D5" });
-            
-            board.updateMoveToBoard("White", "D7");
-            board.updateMoveToBoard("White", "D6");
-            board.updateMoveToBoard("White", "D5");
-            
-            game.eliminate(player1, board, "A1");
-            game.eliminate(player2, board, "D5");
-
-            Assert.That(player1.getPlayedPos().Contains("A1") == false);
-            Assert.That(player2.getPlayedPos().Contains("D5") == false);
-        }
-
         [Test]
         public void A_player_cannot_shoot_their_own_cows()
         {
