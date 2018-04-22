@@ -83,29 +83,30 @@ namespace Morabaraba.Test
 
         }
 
-        /*
+        
 
         [Test]
         public void BlackCowsGivenFirstChance()
         {
-            Game game = new Game();
-            string currentPlayer = game.getcurrentPlayer();
+            IReferee referee = new Referee();
+            string currentPlayer = referee.getcurrentPlayer();
             Assert.AreEqual("Black", currentPlayer);
         }
-
+        
         [Test]
         public void CanOnlyMoveToConnectedSpace()
         {
-            Game game = new Game();
+            IPlayer player = new Player("Black");
+            IBoard board = new Board();
 
-            game.makeMove("A1", "A4");
-            game.makeMove("F6", "F4");
-            game.makeMove("D1", "F4");
-            Assert.AreEqual(true, game.checkNeighbours("A1").Contains("A4"));
-            Assert.AreEqual(true, game.checkNeighbours("F6").Contains("F4"));
-            Assert.AreEqual(false, game.checkNeighbours("D1").Contains("F4"));
+            player.makeMove("A1", "A4",board);
+            player.makeMove("F6", "F4", board);
+            player.makeMove("D1", "F4", board);
+            Assert.AreEqual(true, board.checkNeighbours("A1").Contains("A4"));
+            Assert.AreEqual(true, board.checkNeighbours("F6").Contains("F4"));
+            Assert.AreEqual(false, board.checkNeighbours("D1").Contains("F4"));
         }
-        */
+        
         [Test]
 
         public void A_maximum_of_12_placements_per_player_are_allowed()
