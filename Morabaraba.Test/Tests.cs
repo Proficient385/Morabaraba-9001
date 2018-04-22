@@ -317,40 +317,49 @@ namespace Morabaraba.Test
             bool result = player1.getPlayedPos().Contains(c[0]);
             Assert.AreEqual(expected, result);
         }
-        /*
+
+        static object[] noKill2 =
+        {
+            new object[] { new string[] {"G1","A4","A7"}, true },
+            new object[] { new string[] {"G1","B2","C3"}, true },
+            new object[] { new string[] {"A1","D1","G1"}, true },
+            new object[] { new string[] {"A4","B4","C4"}, true },
+            new object[] { new string[] {"A7","B6","C5"}, true },
+            new object[] { new string[] {"A7","D7","G7"}, true },
+            new object[] { new string[] {"B2","B4","B6"}, true },
+            new object[] { new string[] {"B2","D2","F2"}, true },
+            new object[] { new string[] {"B6","D6","F6"}, true },
+            new object[] { new string[] {"C3","C4","C5"}, true },
+            new object[] { new string[] {"C3","D3","E3"}, true },
+            new object[] { new string[] {"D1","D2","D3"}, true },
+            new object[] { new string[] {"D5","D6","D7"}, true },
+            new object[] { new string[] {"E3","E4","E5"}, true },
+            new object[] { new string[] {"E4","F4","G4"}, true },
+            new object[] { new string[] {"E5","F6","G7"}, true },
+            new object[] { new string[] {"F2","F4","F6"}, true },
+            new object[] { new string[] {"G1","G4","G7"}, true },
+        };
+
+
         [Test]
-        public void A_player_cannot_shoot_their_own_cows()
+        [TestCaseSource(nameof(noKill2))]
+        public void A_player_cannot_shoot_their_own_cows(string[] c, bool expected)
         {
             IPlayer player1 = new Player("Black");
-            IPlayer player2 = new Player("White");
-            Game game = new Game();
             IBoard board = new Board();
+            IReferee referee = new Referee();
+            Game game = new Game(player1, null, board, referee);
 
-            player1.addPlayedPositions("A1");
-            player1.addPlayedPositions("A4");
-            player1.addPlayedPositions("A7");
-            player1.AddMills(new List<string> { "A1", "A4", "A7" });
+            player1.makePlacement(c[0], board);
+            player1.makePlacement(c[1], board);
+            player1.makePlacement(c[2], board);
+           
+            game.eliminate(player1, board, c[0]);
 
-            board.updateMoveToBoard("Black", "A1");
-            board.updateMoveToBoard("Black", "A4");
-            board.updateMoveToBoard("Black", "A7");
-
-            player2.addPlayedPositions("D7");
-            player2.addPlayedPositions("D6");
-            player2.addPlayedPositions("D5");
-            player2.AddMills(new List<string> { "D7", "D6", "D5" });
-
-            board.updateMoveToBoard("White", "D7");
-            board.updateMoveToBoard("White", "D6");
-            board.updateMoveToBoard("White", "D5");
-
-            game.eliminate(player1, board, "D5");
-            game.eliminate(player2, board, "A1");
-
-            Assert.That(player1.getPlayedPos().Contains("A1") == true);
-            Assert.That(player2.getPlayedPos().Contains("D5") == true);
+            bool result = player1.getPlayedPos().Contains(c[0]);
+            Assert.AreEqual(expected, result);
         }
-
+        /*
         [Test]
         public void Shot_cows_are_removed_from_the_board()
         {
@@ -451,7 +460,11 @@ namespace Morabaraba.Test
             Assert.That(board.getPieceAtPos("D5") == 'b');
         }
 
+        [Test]
+        private void ShotCowsAreMovedFromTheBoard()
+        {
 
+        }
     }    
 
 }
