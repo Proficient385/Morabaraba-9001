@@ -26,6 +26,7 @@ namespace Morabaraba
             }
             return result;
         }
+
         public void printBoard(char[,] brd)
         {
             Console.Clear();
@@ -253,5 +254,6 @@ namespace Morabaraba
             return ' ';
         }
 
+        
     }
 }

@@ -38,6 +38,7 @@ namespace Morabaraba
             result.Add(new List<string>() { "E3", "F2", "G1" });
             result.Add(new List<string>() { "E4", "F4", "G4" });
             result.Add(new List<string>() { "E5", "F6", "G7" });
+            result.Add(new List<string>() { "G1", "G4", "G7" });
 
             return result;
         }
