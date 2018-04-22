@@ -42,7 +42,6 @@ namespace Morabaraba.Test
             new object[] { new string[] {"E4","F4","G4"}, true },
             new object[] { new string[] {"E5","F6","G7"}, true },
             new object[] { new string[] {"F2","F4","F6"}, true },
-            new object[] { new string[] {"A1","A4","A7"}, true },
             new object[] { new string[] {"G1","G4","G7"}, true },
         };
 
@@ -106,24 +105,41 @@ namespace Morabaraba.Test
 
         }
 
+        static object[] noMills2 =
+       {
+            new object[] { new string[] {"A1","A4","D1"}, false },
+            new object[] { new string[] {"A1","B2","B4"}, false },
+            new object[] { new string[] {"A1","D1","D2"}, false },
+            new object[] { new string[] {"A4","B4","B6"}, false },
+            new object[] { new string[] {"A7","B6","D6"}, false },
+            new object[] { new string[] {"A7","D7","D6"}, false },
+            new object[] { new string[] {"B2","B4","C4"}, false },
+            new object[] { new string[] {"B2","D2","D3"}, false },
+            new object[] { new string[] {"B6","D6","D5"}, false },
+            new object[] { new string[] {"C3","C4","B4"}, false },
+            new object[] { new string[] {"C3","D3","D2"}, false },
+            new object[] { new string[] {"D1","D2","F2"}, false },
+            new object[] { new string[] {"D5","D6","F6"}, false },
+            new object[] { new string[] {"E3","E4","F4"}, false },
+            new object[] { new string[] {"E4","F4","F2"}, false },
+            new object[] { new string[] {"E5","F6","D6"}, false },
+            new object[] { new string[] {"F2","F4","G1"}, false },
+            new object[] { new string[] {"G1","G4","F4"}, false },
+        };
+
         [Test]
-        public void CheckMill_ConnectedSpaces_ContainingCows_Do_Notform_ALine()
+        [TestCaseSource(nameof(noMills2))]
+        public void CheckMill_ConnectedSpaces_ContainingCows_Do_Notform_ALine(string[] c, bool expected)
         {
             Player player1 = new Player("Black");
-            Player player2 = new Player("White");
             IReferee referee = new Referee();
 
-            player1.addPlayedPositions("D1");
-            player1.addPlayedPositions("A1");
-            player1.addPlayedPositions("A4");
+            player1.addPlayedPositions(c[0]);
+            player1.addPlayedPositions(c[1]);
+            player1.addPlayedPositions(c[2]);
 
-            player2.addPlayedPositions("A7");
-            player2.addPlayedPositions("B6");
-            player2.addPlayedPositions("D6");
-
-            Assert.That(referee.isMill(player1) == false);
-            Assert.That(referee.isMill(player2) == false);
-
+            bool result = referee.isMill(player1);
+            Assert.AreEqual(expected, result);
         }
         
         [Test]
