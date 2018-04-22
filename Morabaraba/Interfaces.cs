@@ -56,6 +56,8 @@ namespace Morabaraba
         void play();
         bool Winner(IPlayer player1, IPlayer player2);
         bool isMill(IPlayer player);
+        string get_GameState();
+        void updateGameStat(string state);
         string getcurrentPlayer();
         void swapcurrentPlayer();
     }

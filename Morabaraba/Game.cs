@@ -58,6 +58,7 @@ namespace Morabaraba
         }
         private bool invalidKill(IPlayer player, IBoard board, string position)
         {
+            if (referee.get_GameState() != "Mill") return true;
             if (!Board.isValidPosition(position))
             {
                 return true;
@@ -121,6 +122,7 @@ namespace Morabaraba
             else
             {
                 Console.WriteLine("KILLED");
+                referee.updateGameStat("OnGoing");
                 player.killCow(position);
                 board.updateMoveFromBoard(position);
                

@@ -8,10 +8,12 @@ namespace Morabaraba
     {
         private string currentPlayer;
         private List<List<string>> possible_Mills;
+        private string gameState;
         public Referee()
         {
             possible_Mills = generate_possible_Mills();
             currentPlayer = "Black";
+            gameState = "OnGoing";
         }
 
         private List<List<string>> generate_possible_Mills()
@@ -22,7 +24,6 @@ namespace Morabaraba
             result.Add(new List<string>() { "C3", "C4", "C5" });
             result.Add(new List<string>() { "D1", "D2", "D3" });
             result.Add(new List<string>() { "D5", "D6", "D7" });
-            result.Add(new List<string>() { "E3", "E4", "E5" });
             result.Add(new List<string>() { "E3", "E4", "E5" });
             result.Add(new List<string>() { "F2", "F4", "F6" });
             result.Add(new List<string>() { "G1", "G4", "G6" });
@@ -64,12 +65,22 @@ namespace Morabaraba
                 if (count == 3 && !mill_List.Contains(possible_Mills[i]))
                 {
                     player.AddMills(possible_Mills[i]);
+                    gameState = "Mill";
                     return true;
                 }
             }
             return false;
         }
 
+        public void updateGameStat(string state)
+        {
+            gameState = state;
+        }
+
+        public string get_GameState()
+        {
+            return gameState;
+        }
         public void play()
         {
             throw new NotImplementedException();

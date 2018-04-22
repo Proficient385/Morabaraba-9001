@@ -62,6 +62,59 @@ namespace Morabaraba.Test
             Assert.AreEqual(expected, result);
         }
 
+        static object[] possibleMills2 =
+        {
+            new object[] { new string[] {"A1","A4","A7","B2","B4"},false, true },
+            new object[] { new string[] {"A1","B2","C3", "G1", "G7"},false, true },
+            new object[] { new string[] {"A1","D1","G1", "B2", "B4"},false, true },
+            new object[] { new string[] {"A4","B4","C4", "A1","A7"},false, true },
+            new object[] { new string[] {"A7","B6","C5", "A1","A4"},false, true },
+            new object[] { new string[] {"A7","D7","G7", "A1","A4"},false, true },
+            new object[] { new string[] {"B2","B4","B6", "G7", "G1"},false, true },
+            new object[] { new string[] {"B2","D2","F2", "A1", "A4"},false, true },
+            new object[] { new string[] {"B6","D6","F6", "F2", "A1"},false, true },
+            new object[] { new string[] {"C3","C4","C5", "A1","A4"},false, true },
+            new object[] { new string[] {"C3","D3","E3", "B2", "B4"},false, true },
+            new object[] { new string[] {"D1","D2","D3", "F2", "F6"},false, true },
+            new object[] { new string[] {"D5","D6","D7", "B2", "B4"},false, true },
+            new object[] { new string[] {"E3","E4","E5", "B2", "A4"},false, true },
+            new object[] { new string[] {"E4","F4","G4", "D1", "G7"},false, true },
+            new object[] { new string[] {"E5","F6","G7", "F2","D2"},false, true },
+            new object[] { new string[] {"F2","F4","F6", "G1", "G7"},false, true },
+            new object[] { new string[] {"G1","G4","G7", "A1", "A4"},false, true },
+        };
+
+        [Test]
+        [TestCaseSource(nameof(possibleMills2))]
+        public void Shooting_is_only_possible_on_the_turn_that_a_mill_is_Completed(string[] c, bool expected1, bool expected2)
+        {
+            IPlayer player1 = new Player("Black");
+            IPlayer player2 = new Player("White");
+            IReferee referee = new Referee();
+            IBoard board = new Board();
+            Game g = new Game(player1, player2, board, referee);
+
+            player1.makePlacement(c[0],board);
+            player1.makePlacement(c[1], board);
+            player1.makePlacement(c[2], board);
+
+            player2.makePlacement(c[3], board);
+            player2.makePlacement(c[4], board);
+            
+            bool mill = referee.isMill(player1);
+            g.eliminate(player2,board, c[3]);
+
+            bool result = player2.playerOwnPosition(c[3]);
+            Assert.AreEqual(expected1,result);
+
+            mill = referee.isMill(player1);
+            g.eliminate(player2, null, c[4]);
+
+            result = player2.playerOwnPosition(c[4]);
+            Assert.AreEqual(expected2, result);
+
+        }
+
         static object[] no_Mills =
         {
             new object[] { new string[] { "A1"},new string[] {"B2","A7"}, false},
@@ -468,7 +521,44 @@ namespace Morabaraba.Test
             Assert.That(board.getNumberOfcows() == 12);
             Assert.That(board.getPieceAtPos("D5") == 'b');
         }
+        static object[] aKill4 =
+        {
+            new object[] { "A1", true },
+            new object[] { "A4", true },
+            new object[] { "A7", true },
+            new object[] { "B2", true },
+            new object[] { "B4", true },
+            new object[] { "B6", true },
+            new object[] { "C3", true },
+            new object[] { "C4", true },
+            new object[] { "C5", true },
+            new object[] { "D1", true },
+            new object[] { "D2", true },
+            new object[] { "D3", true },
+            new object[] { "D5", true },
+            new object[] { "D6", true },
+            new object[] { "D7", true },
+            new object[] { "F2", true },
+            new object[] { "G7", true },
+            new object[] { "G1", true },
+        };
 
+        [Test]
+        [TestCaseSource(nameof(aKill4))]
+        public void CantShotAnEmptySpace(string a, bool expected)
+        {
+            IReferee referee = new Referee();
+            IPlayer playerBlack = new Player("Black");
+            IPlayer playerWhite = new Player("White");
+            IBoard brd = new Board();
+            Game g = new Game(playerBlack, playerWhite, brd, referee);
+
+            referee.updateGameStat("Mill");
+            g.eliminate(playerBlack, brd, a);
+
+            bool check = referee.get_GameState() == "Mill";
+            Assert.AreEqual(expected, check);
+        }
     }    
 
 }
