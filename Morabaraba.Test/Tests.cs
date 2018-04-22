@@ -63,23 +63,46 @@ namespace Morabaraba.Test
             Assert.AreEqual(expected, result);
         }
 
+        static object[] no_Mills =
+        {
+            new object[] { new string[] { "A1"},new string[] {"B2","A7"}, false},
+            new object[] { new string[] { "A1" },new string[] {"A4","C3"}, false },
+            new object[] { new string[] {"A1","D1"}, new string[] {"G1" }, false },
+            new object[] { new string[] { "A4", "B4" },new string[]{"C4"}, false },
+            new object[] { new string[] { "A7" }, new string[]{"B6","C5"}, false },
+            new object[] { new string[] { "A7" },new string[]{"D7","G7"}, false },
+            new object[] { new string[] { "B2", "B4" },new string[]{"B6"}, false },
+            new object[] { new string[] { "B2", "D2" },new string[]{"F2"}, false },
+            new object[] { new string[] { "B6" },new string[]{"D6","F6"}, false },
+            new object[] { new string[] { "C3" },new string[]{"C4","C5"}, false },
+            new object[] { new string[] { "C3", "D3" },new string[]{"E3"}, false },
+            new object[] { new string[] { "D1", "D2" },new string[]{"D3"}, false },
+            new object[] { new string[] { "D5" },new string[]{"D6","D7"}, false },
+            new object[] { new string[] { "E3" },new string[]{"E4","E5"}, false },
+            new object[] { new string[] { "E4", "F4" },new string[]{"G4"}, false },
+            new object[] { new string[] { "E5" },new string[]{"F6","G7"}, false },
+            new object[] { new string[] { "F2", "F4" },new string[]{"F6"}, false },
+            new object[] { new string[] { "A1", "A4" },new string[]{"A7"}, false },
+            new object[] { new string[] { "G1" },new string[]{"G4","G7"}, false },
+        };
+
         [Test]
-        public void CheckMill_Is_Not_Formed_On_Different_Cows_On_SameLine()
+        [TestCaseSource(nameof(no_Mills))]
+        public void CheckMill_Is_Not_Formed_On_Different_Cows_On_SameLine(string[] w, string[] b, bool expected)
         {
             IPlayer player1 = new Player("Black");
             IPlayer player2 = new Player("White");
             IReferee referee = new Referee();
+            
+            for(int i=0;i<b.Length;i++) player1.addPlayedPositions(b[i]);
+            for (int i = 0; i < w.Length; i++) player2.addPlayedPositions(w[i]);
 
-            player1.addPlayedPositions("A1");
-            player1.addPlayedPositions("G4");
-            player1.addPlayedPositions("A7");
+            bool result = referee.isMill(player1);
+            Assert.AreEqual(expected, result);
 
-            player2.addPlayedPositions("A4");
-            player2.addPlayedPositions("G1");
-            player2.addPlayedPositions("G7");
-
-            Assert.That(referee.isMill(player1) == false);
-            Assert.That(referee.isMill(player2) == false);
+            bool result1 = referee.isMill(player2);
+            Assert.AreEqual(expected, result1);
+            //Assert.That(referee.isMill(player2) == false);
 
         }
 
@@ -102,9 +125,7 @@ namespace Morabaraba.Test
             Assert.That(referee.isMill(player2) == false);
 
         }
-
         
-
         [Test]
         public void BlackCowsGivenFirstChance()
         {
@@ -159,7 +180,6 @@ namespace Morabaraba.Test
         }
 
         [Test]
-
         public void Cows_cannot_be_moved_during_placement()
         {
             //Sakhele
