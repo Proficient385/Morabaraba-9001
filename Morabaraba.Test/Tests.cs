@@ -364,7 +364,8 @@ namespace Morabaraba.Test
             player1.makePlacement(c[1],board);
             player1.makePlacement(c[2],board);
             referee.isMill(player1);
-            
+
+            referee.swapcurrentPlayer();
             game.eliminate(player1, board, c[0]);
 
             bool result = player1.getPlayedPos().Contains(c[0]);
@@ -452,6 +453,7 @@ namespace Morabaraba.Test
             player1.makePlacement(c[2], board);
             referee.isMill(player1);
 
+            referee.swapcurrentPlayer();
             game.eliminate(player1, board, c[0]);
 
             bool result = board.getPieceAtPos(c[0])==' ';
@@ -542,6 +544,7 @@ namespace Morabaraba.Test
             new object[] { "G7", true },
             new object[] { "G1", true },
         };
+        
 
         [Test]
         [TestCaseSource(nameof(aKill4))]
@@ -559,7 +562,127 @@ namespace Morabaraba.Test
             bool check = referee.get_GameState() == "Mill";
             Assert.AreEqual(expected, check);
         }
-    }    
+
+        [Test]
+
+        public void Cows_can_move_to_any_empty_space_if_only_three_cows_of_that_colorremain()
+        {
+            //Sakhele
+
+            Board board = new Board();
+            IPlayer player1 = new Player("Black");
+            IPlayer player2 = new Player("White");
+            IReferee referee = new Referee();
+
+            Game game = new Game(player1, player2, board, referee);
+
+            player1.makePlacement("A1", board);
+            player1.makePlacement("G4", board);
+            player1.makePlacement("A7", board);
+            player1.makePlacement("G7", board);
+
+            player1.makePlacement("B4", board);
+            player1.makePlacement("C3", board);
+            player1.makePlacement("C5", board);
+            player1.makePlacement("E3", board);
+
+            player1.makePlacement("E5", board);
+            player1.makePlacement("D1", board);
+            player1.makePlacement("D6", board);
+            player1.makePlacement("D2", board);
+            referee.swapcurrentPlayer();
+
+            referee.updateGameStat("Mill"); ;
+            game.eliminate(player1, board, "A1");
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "G4");
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "A7");
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "G7");
+
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "B4");
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "C3");
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "C5");
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "E3");
+
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "E5");
+            player1.updateState();
+            player1.flyCow("D1", "G7", board);
+            player1.flyCow("D2", "F2", board);
+
+
+            Assert.That(board.getPieceAtPos("D1") == ' ');
+            Assert.That(board.getPieceAtPos("G7") == 'b');
+
+            Assert.That(board.getPieceAtPos("D3") == ' ');
+            Assert.That(board.getPieceAtPos("F2") == 'b');
+            Assert.That(board.getPieceAtPos("D1") == ' ');
+        }
+
+        [Test]
+
+        public void A_win_occurs_if_an_opponent_has_two_or_fewer_cows_and_placement_isfinished()
+        {
+            //Sakhele
+
+            Board board = new Board();
+            IPlayer player1 = new Player("Black");
+            IPlayer player2 = new Player("White");
+            IReferee referee = new Referee();
+
+            Game game = new Game(player1, player2, board, referee);
+
+            player1.makePlacement("A1", board);
+            player1.makePlacement("G4", board);
+            player1.makePlacement("A7", board);
+            player1.makePlacement("G7", board);
+
+            player1.makePlacement("B4", board);
+            player1.makePlacement("C3", board);
+            player1.makePlacement("C5", board);
+            player1.makePlacement("E3", board);
+
+            player1.makePlacement("E5", board);
+            player1.makePlacement("D1", board);
+            player1.makePlacement("D6", board);
+            player1.makePlacement("D2", board);
+            referee.swapcurrentPlayer();
+
+            referee.updateGameStat("Mill"); ;
+            game.eliminate(player1, board, "A1");
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "G4");
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "A7");
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "G7");
+
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "B4");
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "C3");
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "C5");
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "E3");
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "E5");
+            referee.updateGameStat("Mill");
+            game.eliminate(player1, board, "D1");
+
+            referee.updateGameStat(player1, new Player("White"));
+            bool result = referee.get_GameState() == "Game Over!";
+
+            Assert.AreEqual(true, result);
+        }
+
+    }
 
 }
 

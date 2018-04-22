@@ -73,13 +73,14 @@ namespace Morabaraba
 
         public void updateState()
         {
-            if (playedPos.Count == cowsLeft)
+            if (cowsLeft == 3)
             {
-               state = "Moving"; 
+                state = "Flying";
+                return;
             }
-            if(cowsLeft == 3)
+            else if (playedPos.Count == cowsLeft && cowsLeft != 3 && playedPos.Count != 3)
             {
-               state = "Flying";
+                state = "Moving";
             }
         }
 
@@ -90,6 +91,7 @@ namespace Morabaraba
 
         public void killCow(string position)
         {
+            updateState();
             removePlayedPositions(position);
             cowsLeft--;
         }
@@ -97,6 +99,7 @@ namespace Morabaraba
         public void makePlacement(string Position, IBoard board)
 
         {
+            updateState();
 
             if ( placementCount < 12)
             {
@@ -117,6 +120,7 @@ namespace Morabaraba
         public void makeMove(string moveFrom, string moveTo, IBoard board)
         {
 
+            updateState();
 
             if (state == "Moving" && board.getPieceAtPos(moveTo) == ' ' && board.getPieceAtPos(moveFrom) != ' ')
             {
@@ -130,6 +134,20 @@ namespace Morabaraba
 
         }
 
+        public void flyCow(string flyFrom, string flyTo, IBoard board)
+        {
+            updateState();
+
+            if (state == "Flying" && board.getPieceAtPos(flyTo) == ' ' && board.getPieceAtPos(flyFrom) != ' ')
+            {
+                board.updateMoveFromBoard(flyFrom);
+                board.updateMoveToBoard(symbol, flyTo);
+
+                addPlayedPositions(flyTo);
+                removePlayedPositions(flyFrom);
+
+            }
+        }
         public int getNUmOfPlacedCows()
         {
             return placementCount;

@@ -17,6 +17,7 @@ namespace Morabaraba
         bool isValidPosition(string position);
         char getPieceAtPos(string position);
         void updateNumberOfCows();
+        void updateBoard(string position, char symbol);
 
     }
 
@@ -37,6 +38,7 @@ namespace Morabaraba
         int getNUmOfPlacedCows();
         void makePlacement(string Position, IBoard board);
         void makeMove(string moveFrom, string moveTo, IBoard board);
+        void flyCow(string flyFrom, string flyTo, IBoard board);
     }
 
     public interface ICommandLineInterface
@@ -60,6 +62,8 @@ namespace Morabaraba
         void updateGameStat(string state);
         string getcurrentPlayer();
         void swapcurrentPlayer();
+        void updateGameStat(IPlayer p1, IPlayer p2);
+
     }
 
 

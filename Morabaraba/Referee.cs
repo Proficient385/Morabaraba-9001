@@ -77,6 +77,14 @@ namespace Morabaraba
             gameState = state;
         }
 
+        public void updateGameStat(IPlayer p1, IPlayer p2)
+        {
+            if(p1.numberOfCows()<=2 && p1.getNUmOfPlacedCows()==12 || p2.numberOfCows()<=2 && p2.getNUmOfPlacedCows() == 12)
+            {
+                updateGameStat("Game Over!");
+            }
+        }
+
         public string get_GameState()
         {
             return gameState;

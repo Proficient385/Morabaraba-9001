@@ -58,9 +58,19 @@ namespace Morabaraba
         }
         private bool invalidKill(IPlayer player, IBoard board, string position)
         {
-            if (referee.get_GameState() != "Mill") return true;
+            if (referee.get_GameState() != "Mill")
+            {
+                Console.WriteLine("No mill broadcasted");
+                return true;
+            }
+            if (referee.getcurrentPlayer() == player.currentPlayer())
+            {
+                Console.WriteLine("Dont kill yourself");
+                return true;
+            }
             if (!Board.isValidPosition(position))
             {
+                Console.WriteLine("Invalid entry");
                 return true;
             }
 
@@ -68,13 +78,18 @@ namespace Morabaraba
             //Console.WriteLine(piece);
             if (piece == ' ')
             {
+                Console.WriteLine("Empty spot");
                 return true;
             }
             else
             {
                 if (player.currentPlayer() == "Black")
                 {
-                    if (!player.playerOwnPosition(position)) return true;
+                    if (!player.playerOwnPosition(position))
+                    {
+                        Console.WriteLine("He's no there ?!!!");
+                        return true;
+                    }
                     if (cowIn_MillPos(player.getMills(), position) && numberOf_Cow_NotInMill(player) == 0)
 
                     {
@@ -85,7 +100,7 @@ namespace Morabaraba
                         Console.WriteLine("Cannot kill a cow already\n in a mill, try\n another cow");
                         return true;
                     }
-                    return true;
+                    return false;
                 }
                 else if (player.currentPlayer() == "White")
                 {
