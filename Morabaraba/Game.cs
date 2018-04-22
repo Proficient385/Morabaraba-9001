@@ -84,13 +84,13 @@ namespace Morabaraba
                         Console.WriteLine("Cannot kill a cow already\n in a mill, try\n another cow");
                         return true;
                     }
-                    return false;
+                    return true;
                 }
                 else if (player.currentPlayer() == "White")
                 {
                     if (cowIn_MillPos(player.getMills(), position) && numberOf_Cow_NotInMill(player) == 0)
                     {
-                        // Console.WriteLine("Cannot kill a cow already\n in a mill, try\n another cow");
+                         Console.WriteLine("Cannot kill a cow already\n in a mill, try\n another cow");
                         return false;
                     }
                     else if (cowIn_MillPos(player.getMills(), position))
@@ -104,7 +104,7 @@ namespace Morabaraba
                 }
                 else
                 {
-                    //Console.WriteLine("Don't kill yourself, Try again");
+                    Console.WriteLine("Don't kill yourself, Try again");
                     return true;
                 }
             }
@@ -115,11 +115,12 @@ namespace Morabaraba
         {
             if (invalidKill(player, board, position))
             {
-                //Console.WriteLine("Error!");
+                Console.WriteLine("Error!");
                 return;
             }
             else
             {
+                Console.WriteLine("KILLED");
                 player.killCow(position);
                 board.updateMoveFromBoard(position);
                
